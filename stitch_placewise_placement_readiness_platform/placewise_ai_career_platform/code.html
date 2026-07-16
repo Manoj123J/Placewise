@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Placewise | Elevate Your Career Readiness</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .hover-lift {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .hover-lift:hover {
+            transform: translateY(-8px);
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+<!-- Tailwind Config from Source of Truth -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#4f46e5",
+                    "inverse-surface": "#2a313d",
+                    "on-tertiary-fixed": "#351000",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "secondary-fixed": "#e1e0ff",
+                    "tertiary-container": "#a44100",
+                    "surface-container-low": "#f0f3ff",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-container": "#e7eefe",
+                    "on-background": "#151c27",
+                    "on-primary-container": "#dad7ff",
+                    "surface-tint": "#4d44e3",
+                    "tertiary": "#7e3000",
+                    "surface-dim": "#d3daea",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-tertiary-container": "#ffd2be",
+                    "outline": "#777587",
+                    "primary-fixed": "#e2dfff",
+                    "on-surface-variant": "#464555",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#07006c",
+                    "surface-container-highest": "#dce2f3",
+                    "on-primary-fixed": "#0f0069",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "background": "#f9f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#2f2ebe",
+                    "surface-container-high": "#e2e8f8",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#151c27",
+                    "on-secondary-container": "#fffbff",
+                    "outline-variant": "#c7c4d8",
+                    "surface": "#f9f9ff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f9f9ff",
+                    "secondary-container": "#6063ee",
+                    "secondary": "#4648d4",
+                    "inverse-primary": "#c3c0ff",
+                    "primary": "#3525cd",
+                    "surface-variant": "#dce2f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "1.5rem",
+                    "inset-card": "1.5rem",
+                    "container-max": "1280px",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "2rem",
+                    "margin-mobile": "1rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md overflow-x-hidden">
+<!-- TopNavBar Implementation -->
+<header class="sticky top-0 w-full z-50 bg-surface-container-lowest dark:bg-inverse-surface border-b border-outline-variant dark:border-outline shadow-sm dark:shadow-none">
+<nav class="flex justify-between items-center px-gutter py-3 max-w-container-max mx-auto">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 1;">rocket_launch</span>
+<span class="text-headline-md font-headline-md font-bold text-primary dark:text-inverse-primary">Placewise</span>
+</div>
+<!-- Desktop Navigation -->
+<div class="hidden md:flex items-center gap-8">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-md font-label-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-md font-label-md" href="#">Roadmap</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-md font-label-md" href="#">Assessments</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-primary-fixed-dim transition-colors text-label-md font-label-md" href="#">Profile</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="hidden md:block bg-primary text-on-primary px-6 py-2 rounded-full font-label-md text-label-md active:scale-95 transition-transform duration-150">
+                    Start Assessment
+                </button>
+<div class="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a diverse college student in a modern academic setting, smiling confidently. The lighting is bright and natural, reflecting an optimistic and career-ready atmosphere. The background shows a soft-focus library with modern minimalist architecture, using a palette of clean whites and professional indigo accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO2dP7Wt-yzhjgjTX77mkM4vQ2YdeV8S3XkVsOTRkeCyZ8yt8D6mdP-bUmxGPSPU6zt8czgVddU9VCz1ijY6RCim38Cm1FLums6uG223LtLbZdaMirgxUmpk46nthms9uX5QRBevlv3WTiS5kRmTO5jdM_Sd4ggGbjxJqUEEu4QVbviMpadNzK9sjuRq1DK3xvf_GLpGQmfFErPJ-VlAy68dwIO2ye5cq90ib1fNqzCJrLTE9HSpsp"/>
+</div>
+</div>
+</nav>
+</header>
+<main>
+<!-- Hero Section -->
+<section class="relative overflow-hidden pt-20 pb-32 px-gutter">
+<!-- Background Decorative Elements -->
+<div class="absolute top-0 right-0 -z-10 w-1/2 h-full opacity-10">
+
+</div>
+<div class="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+<div class="max-w-container-max mx-auto grid lg:grid-cols-2 gap-12 items-center">
+<div class="flex flex-col gap-stack-lg">
+<div class="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full w-fit">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-label-sm font-label-sm uppercase tracking-wider">AI-Powered Career Intelligence</span>
+</div>
+<h1 class="text-headline-xl font-headline-xl md:text-6xl text-on-surface leading-[1.1] max-w-xl">
+                        Elevate Your Career Readiness with <span class="text-primary">Placewise AI</span>
+</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-lg">
+                        The intelligent roadmap to your dream campus placement. We bridge the gap between academic learning and industry expectations using personalized AI insights.
+                    </p>
+<div class="flex flex-col sm:flex-row gap-4 pt-4">
+<button class="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline-sm text-headline-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 group">
+                            Student Login
+                            <span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+<button class="bg-surface-container-highest text-on-surface px-8 py-4 rounded-xl font-headline-sm text-headline-sm hover:bg-surface-container-high transition-all flex items-center justify-center gap-2 border border-outline-variant">
+                            Admin Login
+                        </button>
+</div>
+<div class="flex items-center gap-6 pt-4 border-t border-outline-variant w-fit">
+<div class="flex -space-x-3">
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-primary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-sm">person</span>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-secondary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-sm">school</span>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-surface bg-tertiary/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-tertiary text-sm">psychology</span>
+</div>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                            Trusted by <span class="font-bold text-on-surface">5,000+ Students</span> across premium campuses
+                        </p>
+</div>
+</div>
+<div class="relative hidden lg:block animate-float">
+<div class="absolute -inset-4 bg-primary/10 rounded-3xl -rotate-2"></div>
+<div class="relative glass-card border border-outline-variant rounded-3xl p-8 shadow-2xl">
+<img class="rounded-xl w-full shadow-lg border border-outline-variant" data-alt="A futuristic dashboard UI shown on a high-resolution display, featuring elegant radar charts for skill assessments, a clean progress timeline, and AI-suggested learning milestones. The interface uses a sophisticated color palette of deep indigo, soft lavenders, and crisp whites. High-key studio lighting highlights the premium build quality of the device showing the app." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5MvYSuiAUPJVk6lLzymDRclRnwYdi8F3Zj8msMpdw5Gie8CCttSJPlHmRLuJ3_sXtA5YreuXK6rNqS1V5I_6Ej1lC70FN7qa7uexanHoLHqS4-eiGSidL75MSXZVVMD2v3u4RKKPlkg4LWeUFUYGA0fA92UG0JFqKPZ-keuh0muIlEk10OoB9T2Hf6WrNLM3lnpzLHCC18IBPWl1bNJ54DbU98cRebVIca1WSU_AQyCTYmkj-5MkP"/>
+<!-- Floating Badge -->
+<div class="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-outline-variant flex items-center gap-4 animate-bounce">
+<div class="bg-green-100 p-2 rounded-full">
+<span class="material-symbols-outlined text-green-600">check_circle</span>
+</div>
+<div>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Readiness Score</p>
+<p class="text-headline-sm font-headline-sm text-on-surface">85% Optimized</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Features Section -->
+<section class="py-24 bg-surface-container-low/50 px-gutter">
+<div class="max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-4">Master Every Step of the Placement Journey</h2>
+<p class="text-body-md font-body-md text-on-surface-variant max-w-2xl mx-auto">
+                        Our platform provides the analytical depth and personalized guidance needed to stand out in a competitive job market.
+                    </p>
+</div>
+<div class="grid md:grid-cols-3 gap-8">
+<!-- Feature Card 1 -->
+<div class="glass-card p-inset-card rounded-xl border border-outline-variant hover-lift flex flex-col gap-4 shadow-sm">
+<div class="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-primary text-3xl" style="font-variation-settings: 'FILL' 0;">analytics</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Eligibility Check</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                            Smart tracking of CGPA and specific corporate requirements. Know exactly where you stand with every company roadmap.
+                        </p>
+<div class="mt-auto pt-4 flex items-center text-primary font-label-md text-label-md gap-1 cursor-pointer hover:underline">
+                            Explore requirements <span class="material-symbols-outlined text-sm">north_east</span>
+</div>
+</div>
+<!-- Feature Card 2 -->
+<div class="glass-card p-inset-card rounded-xl border border-outline-variant hover-lift flex flex-col gap-4 shadow-sm">
+<div class="w-14 h-14 rounded-2xl bg-secondary/10 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-secondary text-3xl" style="font-variation-settings: 'FILL' 0;">map</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Skill Roadmap</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                            AI-personalized learning paths that adapt to your career goals. We identify skill gaps and provide precise content.
+                        </p>
+<div class="mt-auto pt-4 flex items-center text-secondary font-label-md text-label-md gap-1 cursor-pointer hover:underline">
+                            View sample path <span class="material-symbols-outlined text-sm">north_east</span>
+</div>
+</div>
+<!-- Feature Card 3 -->
+<div class="glass-card p-inset-card rounded-xl border border-outline-variant hover-lift flex flex-col gap-4 shadow-sm">
+<div class="w-14 h-14 rounded-2xl bg-tertiary/10 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-tertiary text-3xl" style="font-variation-settings: 'FILL' 0;">dynamic_form</span>
+</div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Adaptive Tests</h3>
+<p class="text-body-md font-body-md text-on-surface-variant">
+                            Real-time difficulty adjustments based on your performance. Simulate actual company assessments with precision.
+                        </p>
+<div class="mt-auto pt-4 flex items-center text-tertiary font-label-md text-label-md gap-1 cursor-pointer hover:underline">
+                            Take free trial <span class="material-symbols-outlined text-sm">north_east</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Stats / Trust Section -->
+<section class="py-20 px-gutter bg-white">
+<div class="max-w-container-max mx-auto bg-primary-container rounded-[2rem] p-12 text-on-primary-container flex flex-col md:flex-row items-center justify-around gap-12 relative overflow-hidden">
+<div class="absolute inset-0 opacity-10">
+
+</div>
+<div class="text-center relative z-10">
+<p class="text-headline-xl font-headline-xl text-white">94%</p>
+<p class="text-label-md font-label-md uppercase opacity-80">Placement Success</p>
+</div>
+<div class="h-16 w-px bg-white/20 hidden md:block"></div>
+<div class="text-center relative z-10">
+<p class="text-headline-xl font-headline-xl text-white">200+</p>
+<p class="text-label-md font-label-md uppercase opacity-80">Partner Institutions</p>
+</div>
+<div class="h-16 w-px bg-white/20 hidden md:block"></div>
+<div class="text-center relative z-10">
+<p class="text-headline-xl font-headline-xl text-white">1.2M</p>
+<p class="text-label-md font-label-md uppercase opacity-80">Mock Tests Taken</p>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer Implementation -->
+<footer class="w-full py-8 px-gutter flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto border-t border-outline-variant dark:border-outline bg-surface-container-lowest">
+<div class="flex flex-col gap-4 items-center md:items-start mb-8 md:mb-0">
+<div class="flex items-center gap-2">
+<span class="text-label-md font-label-md font-bold text-on-surface dark:text-inverse-on-surface">Placewise AI</span>
+</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant max-w-xs text-center md:text-left">
+                © 2024 Placewise AI. Academic Excellence &amp; Career Readiness.
+            </p>
+</div>
+<div class="flex flex-wrap justify-center gap-8">
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-label-sm font-label-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-label-sm font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-label-sm font-label-sm" href="#">Institutional Login</a>
+<a class="text-on-surface-variant dark:text-surface-variant hover:text-primary dark:hover:text-inverse-primary transition-colors text-label-sm font-label-sm" href="#">Contact Support</a>
+</div>
+<div class="flex gap-4 mt-8 md:mt-0">
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/20 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-sm">public</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-primary/20 cursor-pointer transition-colors">
+<span class="material-symbols-outlined text-sm">alternate_email</span>
+</div>
+</div>
+</footer>
+<script>
+        // Simple scroll interaction for header
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-md');
+                header.classList.remove('shadow-sm');
+            } else {
+                header.classList.add('shadow-sm');
+                header.classList.remove('shadow-md');
+            }
+        });
+    </script>
+</body></html>

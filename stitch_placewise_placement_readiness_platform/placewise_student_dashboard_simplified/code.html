@@ -1,0 +1,330 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Placewise Student Dashboard</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Google Fonts: Inter -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#4f46e5",
+                    "inverse-surface": "#2a313d",
+                    "on-tertiary-fixed": "#351000",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "secondary-fixed": "#e1e0ff",
+                    "tertiary-container": "#a44100",
+                    "surface-container-low": "#f0f3ff",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-container": "#e7eefe",
+                    "on-background": "#151c27",
+                    "on-primary-container": "#dad7ff",
+                    "surface-tint": "#4d44e3",
+                    "tertiary": "#7e3000",
+                    "surface-dim": "#d3daea",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-tertiary-container": "#ffd2be",
+                    "outline": "#777587",
+                    "primary-fixed": "#e2dfff",
+                    "on-surface-variant": "#464555",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#07006c",
+                    "surface-container-highest": "#dce2f3",
+                    "on-primary-fixed": "#0f0069",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "background": "#f9f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#2f2ebe",
+                    "surface-container-high": "#e2e8f8",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#151c27",
+                    "on-secondary-container": "#fffbff",
+                    "outline-variant": "#c7c4d8",
+                    "surface": "#f9f9ff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f9f9ff",
+                    "secondary-container": "#6063ee",
+                    "secondary": "#4648d4",
+                    "inverse-primary": "#c3c0ff",
+                    "primary": "#3525cd",
+                    "surface-variant": "#dce2f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "1.5rem",
+                    "inset-card": "1.5rem",
+                    "container-max": "1280px",
+                    "stack-sm": "0.5rem",
+                    "stack-lg": "2rem",
+                    "margin-mobile": "1rem",
+                    "stack-md": "1rem"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-color: #F9FAFB;
+            color: #151c27;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .radar-chart-container {
+            position: relative;
+            width: 100%;
+            height: 320px;
+        }
+
+        .score-gradient {
+            background: linear-gradient(135deg, #4f46e5 0%, #3525cd 100%);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #4f46e5;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body class="bg-surface">
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 bg-surface-container-lowest border-b border-outline-variant shadow-sm transition-transform duration-150">
+<div class="max-w-container-max mx-auto px-gutter py-3 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-extrabold text-primary">Placewise</span>
+<nav class="hidden md:flex items-center gap-6 ml-8">
+<a class="text-primary border-b-2 border-primary pb-1 font-bold font-label-md text-label-md" href="#">Dashboard</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Roadmap</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Assessments</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-md text-label-md" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hidden md:block bg-primary-container text-white px-5 py-2 rounded-lg font-label-md text-label-md hover:brightness-110 active:scale-95 transition-all">
+                    Start Assessment
+                </button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant relative group" tabindex="0">
+<div class="text-right hidden sm:block">
+<p class="font-label-md text-label-md text-on-surface">Alex Johnson</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Computer Science, Year 4</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="A professional studio portrait of a young male university student with a friendly and confident expression. He is wearing a minimalist dark navy sweater against a soft, light grey studio background. The lighting is bright and clean, reflecting a high-end corporate light-mode UI aesthetic with professional clarity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwrkmKffXTsRGBz0eJn4niIKsgXX4cy_MW3hcxXOeMj2Ac_PbIVxUFAOhg5ZE86AswY4lAxAuEKxlVCDEyrfBWvriRDYrMJlZJVUHjNH42YOJLQQOMKAysf8zwhVAiqHuA9UOUGFVmTNA6Lb9jNcumbkm99xWNDtripPaVAsmrctqI1JThcAaUr5aopwWi5zGIkjxk4wT3rX8CuOyZy7y2Xokly35qI7_cTyXaQ7_2bj47ahAlGyRi">
+<div class="hidden group-focus-within:block absolute top-full right-0 mt-4 w-[400px] bg-surface-container-lowest border border-outline-variant rounded-xl shadow-xl z-50 overflow-hidden p-4"><div class="mb-6"><div class="flex justify-between items-center mb-4"><h2 class="font-headline-sm text-headline-sm text-on-surface">Readiness Radar</h2><span class="text-primary font-bold">79</span></div><div class="radar-chart-container flex items-center justify-center h-48"><svg class="w-full h-full" viewBox="0 0 400 400"><polygon fill="none" points="200,40 360,200 200,360 40,200" stroke="#E5E7EB" stroke-width="1"></polygon><polygon fill="#4f46e5" fill-opacity="0.2" points="200,64 312,200 200,344 96,200" stroke="#4f46e5" stroke-width="2"></polygon></svg></div></div><div class="score-gradient rounded-lg p-4 text-white text-center"><p class="text-label-sm uppercase tracking-widest opacity-80">Readiness Score</p><p class="text-headline-md font-bold">79</p><p class="text-body-sm opacity-80">Highly Eligible</p></div></div></div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-gutter py-stack-lg flex flex-col gap-stack-lg">
+<!-- Welcome Header -->
+<section class="lg:col-span-3">
+<h1 class="font-headline-lg text-headline-lg text-on-surface">Good Morning, Alex.</h1>
+<p class="font-body-md text-body-md text-on-surface-variant">Here is your current career readiness overview for your dream roles.</p>
+</section>
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+<!-- Left Column: Readiness Radar Chart -->
+<!-- Right Column: Widgets -->
+<div class="flex flex-col gap-gutter">
+<!-- Dream Company Selector -->
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl card-shadow p-inset-card">
+<h2 class="font-label-md text-label-md text-on-surface mb-4">Targeting Dream Company</h2>
+<div class="relative group">
+<button class="w-full flex items-center justify-between bg-surface-container-low border border-outline-variant p-3 rounded-lg hover:border-primary-container transition-all">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 bg-white rounded-md flex items-center justify-center p-1 border border-outline-variant">
+<img class="w-full h-full object-contain" data-alt="The iconic multi-colored minimalist 'G' logo of Google on a clean white background. This is a vector-style asset representating corporate identity in a high-end tech educational dashboard. The lighting is neutral and the focus is sharp and professional." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVSp9YuLKLgIWmwPmBU_JDgKsbr8JRalSG-e-rC2Q8sXJwfU9nMgC0ArfeMF1WaKLC6JGFvCfUOzUYHtwnugzDUwYctYx8EYQNBA4RmuWUk7Zc17ADBQjB3F8HymQd7nQVSxrIUvOXoTPUWg8-dSYDp9k1onGQjvf9m_NNBatomLI8vO9Q1tDqb5DCWeslsGO_wJ8m40reMwIsXZzR8kJ7erybOzroE-RoxvXOTXPkWfr6EekQc4Fd">
+</div>
+<span class="font-label-md text-label-md text-on-surface">Google Inc.</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant">expand_more</span>
+</button>
+<!-- Fake Dropdown Items -->
+<div class="hidden group-focus-within:block absolute top-full left-0 w-full mt-2 bg-white border border-outline-variant rounded-lg shadow-xl z-10 overflow-hidden">
+<div class="p-2 hover:bg-surface-container-low cursor-pointer flex items-center gap-3">
+<div class="w-6 h-6 bg-white p-1"><img class="w-full h-full object-contain" data-alt="The minimalist Microsoft corporate logo featuring the four colored squares in a clean grid arrangement. Red, green, blue, and yellow squares on a pure white background, presented as a professional UI icon." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB_ta-yDwO7j4gRBmc6TcNs6SSh5KhEYPfWqhmHTYf7qprtqQo5YhT85GbC9E2tnRoJjlK78vMbcCggvJrwH97SZ2-HjHXt_lqq_4tYNBcjyJzB6BO6qWS9AtFKQd3SJLoB6Km__LD0Vlo3wrpranRAQtfqu0X3Vv4kSYtEs_A0OmsEdE0nB9PQUoYrN5kpXTB34y6P36V-kgpVAwLU3yNM4v7GfEDy0dB8V97EqXojln-KDlFFIk6X"></div>
+<span class="text-label-md">Microsoft</span>
+</div>
+<div class="p-2 hover:bg-surface-container-low cursor-pointer flex items-center gap-3">
+<div class="w-6 h-6 bg-white p-1"><img class="w-full h-full object-contain" data-alt="The sleek, minimalist Meta logo, a continuous blue loop against a stark white background. Professional vector graphics suitable for a high-tech career platform." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9Wog_Rcfg4qdm8ohDhSYjh4pcntTAgYeWGw0Aul9gALYUrXIx6JgjV8kZfqAQF5KjzFcnw4MCha5cOmOJr4rEygWGl9Vr0jwPlNzoHn9h7QmSirjApL3KUGDRbJ1pxcgKs-PEIRSRbn2Jgv0BgalgOJw1C7RgXrDtG4HWJDtOcqqvznCjDaisWonNNVcA6Jt_F4TsaRLPR1WsaVTf3c-Klvikn7p6rf6gI7slNGPGQDv61BYgHuHR"></div>
+<span class="text-label-md">Meta</span>
+</div>
+</div>
+</div>
+<p class="mt-4 font-body-sm text-body-sm text-on-surface-variant italic">Next drive: October 2024</p>
+</div>
+<!-- Placement Readiness Score -->
+</div>
+</div>
+<!-- AI-Generated Skill Roadmap -->
+<section class="bg-surface-container-lowest border border-outline-variant rounded-xl card-shadow overflow-hidden lg:col-span-3">
+<div class="p-inset-card border-b border-outline-variant flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                        AI-Generated Skill Roadmap
+                    </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Personalized steps based on Google's interview patterns.</p>
+</div>
+<div class="bg-primary/10 text-primary px-4 py-1.5 rounded-full font-label-sm text-label-sm flex items-center gap-2">
+<div class="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+                    Path: Software Engineering II
+                </div>
+</div>
+<div class="p-inset-card">
+<div class="flex flex-col gap-4">
+<!-- Step 1 (Completed) -->
+<div class="flex items-start gap-4 p-4 rounded-lg bg-surface-container-low/50 border border-transparent hover:border-outline-variant transition-all">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h3 class="font-label-md text-label-md text-on-surface line-through decoration-on-surface-variant/40">Review Big-O Notation</h3>
+<span class="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Completed</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Mastered space and time complexity for core algorithms.</p>
+</div>
+</div>
+<!-- Step 2 (Active) -->
+<div class="flex items-start gap-4 p-4 rounded-lg bg-primary-container/5 border border-primary-container/20 ring-1 ring-primary-container/10">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-primary">radio_button_checked</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h3 class="font-label-md text-label-md text-primary">Master Linked Lists &amp; Trees</h3>
+<span class="bg-primary text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase">Current Task</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Practice 15 Medium-difficulty LeetCode problems specifically on Doubly Linked Lists.</p>
+<div class="mt-4 w-full bg-outline-variant h-1.5 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[60%]" style="transition: width 1s ease-in-out"></div>
+</div>
+<div class="mt-4 flex gap-stack-sm">
+<button class="bg-primary text-white px-4 py-1.5 rounded text-label-sm font-label-md hover:brightness-110 active:scale-95">Start Lab</button>
+<button class="text-primary hover:bg-primary/5 px-4 py-1.5 rounded text-label-sm font-label-md">View Docs</button>
+</div>
+</div>
+</div>
+<!-- Step 3 (Upcoming) -->
+<div class="flex items-start gap-4 p-4 rounded-lg border border-outline-variant bg-white/50 opacity-80 grayscale-[0.5]">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-outline">circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h3 class="font-label-md text-label-md text-on-surface">Mock HR Interview</h3>
+<span class="text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Locked</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Simulate a high-pressure cultural fit round with AI Coach 'Aria'.</p>
+</div>
+</div>
+<!-- Step 4 (Upcoming) -->
+<div class="flex items-start gap-4 p-4 rounded-lg border border-outline-variant bg-white/50 opacity-80 grayscale-[0.5]">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-outline">circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h3 class="font-label-md text-label-md text-on-surface">Project Refactoring</h3>
+<span class="text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Locked</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">Implement Design Patterns (Observer, Singleton) into your Portfolio Projects.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 px-gutter flex flex-col md:flex-row justify-between items-center max-w-container-max mx-auto border-t border-outline-variant bg-surface-container-lowest">
+<div class="mb-4 md:mb-0">
+<span class="text-label-md font-label-md font-bold text-on-surface">Placewise AI</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 Placewise AI. Academic Excellence &amp; Career Readiness.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Terms of Service</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Institutional Login</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-label-sm font-label-sm" href="#">Contact Support</a>
+</div>
+</footer>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                this.classList.add('scale-95');
+                setTimeout(() => this.classList.remove('scale-95'), 150);
+            });
+        });
+
+        // Simulating some animation on page load for the progress bar
+        window.addEventListener('DOMContentLoaded', () => {
+            const progressBar = document.querySelector('.bg-primary.h-full.w-\\[60\\%\\]');
+            if (progressBar) {
+                progressBar.style.width = '0%';
+                setTimeout(() => {
+                    progressBar.style.width = '60%';
+                }, 500);
+            }
+        });
+    </script>
+</body></html>

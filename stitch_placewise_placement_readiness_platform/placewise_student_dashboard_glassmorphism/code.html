@@ -1,0 +1,357 @@
+<!DOCTYPE html><html class="light" lang="en"><head><meta charset="utf-8"><meta content="width=device-width, initial-scale=1.0" name="viewport"><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&amp;display=swap" rel="stylesheet"><script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script><script id="tailwind-config">try{
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#4f46e5",
+                    "inverse-surface": "#2a313d",
+                    "on-tertiary-fixed": "#351000",
+                    "on-tertiary-fixed-variant": "#7b2f00",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "secondary-fixed": "#e1e0ff",
+                    "tertiary-container": "#a44100",
+                    "surface-container-low": "#f0f3ff",
+                    "primary-fixed-dim": "#c3c0ff",
+                    "surface-container": "#e7eefe",
+                    "on-background": "#151c27",
+                    "on-primary-container": "#dad7ff",
+                    "surface-tint": "#4d44e3",
+                    "tertiary": "#7e3000",
+                    "surface-dim": "#d3daea",
+                    "tertiary-fixed": "#ffdbcc",
+                    "on-tertiary-container": "#ffd2be",
+                    "outline": "#777587",
+                    "primary-fixed": "#e2dfff",
+                    "on-surface-variant": "#464555",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#07006c",
+                    "surface-container-highest": "#dce2f3",
+                    "on-primary-fixed": "#0f0069",
+                    "on-tertiary": "#ffffff",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb695",
+                    "background": "#f9f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "on-secondary-fixed-variant": "#2f2ebe",
+                    "surface-container-high": "#e2e8f8",
+                    "on-secondary": "#ffffff",
+                    "on-surface": "#151c27",
+                    "on-secondary-container": "#fffbff",
+                    "outline-variant": "#c7c4d8",
+                    "surface": "#f9f9ff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-primary-fixed-variant": "#3323cc",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#f9f9ff",
+                    "secondary-container": "#6063ee",
+                    "secondary": "#4648d4",
+                    "inverse-primary": "#c3c0ff",
+                    "primary": "#3525cd",
+                    "surface-variant": "#dce2f3"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.5rem",
+                    "lg": "1rem",
+                    "xl": "1.5rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "gutter": "2rem",
+                    "inset-card": "2rem",
+                    "container-max": "1100px",
+                    "stack-sm": "0.75rem",
+                    "stack-lg": "3rem",
+                    "margin-mobile": "1.5rem",
+                    "stack-md": "1.5rem"
+            },
+            "fontFamily": {
+                    "label-md": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-xl": ["Inter"],
+                    "headline-md": ["Inter"],
+                    "headline-lg-mobile": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "body-lg": ["Inter"],
+                    "headline-lg": ["Inter"],
+                    "headline-sm": ["Inter"],
+                    "label-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "label-md": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-xl": ["36px", {"lineHeight": "44px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "32px", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "headline-lg": ["30px", {"lineHeight": "38px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    }catch(_e){}</script></head><body class="bg-surface selection:bg-primary/20">
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<!-- TopNavBar -->
+<header class="sticky top-0 w-full z-50 glass-nav transition-all duration-300">
+<div class="max-w-container-max mx-auto px-gutter py-4 flex justify-between items-center">
+<div class="flex items-center gap-4">
+<span class="text-headline-md font-headline-md font-black tracking-tighter text-primary">Placewise</span>
+<nav class="hidden md:flex items-center gap-8 ml-12">
+<a class="text-primary relative font-bold font-label-md text-label-md after:content-[''] after:absolute after:-bottom-1 after:left-0 after:w-full after:h-0.5 after:bg-primary after:rounded-full" href="#">Dashboard</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors font-label-md text-label-md" href="#">Roadmap</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors font-label-md text-label-md" href="#">Assessments</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors font-label-md text-label-md" href="#">Profile</a>
+</nav>
+</div>
+<div class="flex items-center gap-stack-md">
+<button class="hidden md:block bg-primary text-white px-6 py-2.5 rounded-xl font-label-md text-label-md shadow-lg shadow-primary/20 hover:brightness-110 active:scale-95 transition-all">
+                    Start Assessment
+                </button>
+<div class="flex items-center gap-4 pl-6 border-l border-outline-variant/30">
+<div class="text-right hidden sm:block">
+<p class="font-label-md text-label-md text-on-surface">Alex Johnson</p>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70">Computer Science, Year 4</p>
+</div>
+<img class="w-11 h-11 rounded-full border-2 border-white/50 shadow-sm object-cover" data-alt="A professional studio portrait of a young male university student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwrkmKffXTsRGBz0eJn4niIKsgXX4cy_MW3hcxXOeMj2Ac_PbIVxUFAOhg5ZE86AswY4lAxAuEKxlVCDEyrfBWvriRDYrMJlZJVUHjNH42YOJLQQOMKAysf8zwhVAiqHuA9UOUGFVmTNA6Lb9jNcumbkm99xWNDtripPaVAsmrctqI1JThcAaUr5aopwWi5zGIkjxk4wT3rX8CuOyZy7y2Xokly35qI7_cTyXaQ7_2bj47ahAlGyRi">
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-container-max mx-auto px-gutter py-stack-lg flex flex-col gap-stack-lg">
+<!-- Welcome Header -->
+<section class="text-center md:text-left py-4">
+<h1 class="font-headline-xl text-headline-xl text-on-surface tracking-tight mb-2">Good Morning, Alex.</h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant/80">Here is your current career readiness overview for your dream roles.</p>
+</section>
+<!-- Main Dashboard Grid -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter items-start">
+<!-- Left Column: Readiness Radar Chart -->
+<div class="lg:col-span-2 glass-card rounded-xl p-inset-card">
+<div class="flex justify-between items-center mb-8">
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Readiness Radar Chart</h2>
+<button class="text-primary flex items-center gap-2 font-label-md text-label-md hover:opacity-70 transition-opacity">
+<span class="material-symbols-outlined text-[20px] font-bold">sync</span> Re-sync Data
+                    </button>
+</div>
+<div class="radar-chart-container flex items-center justify-center">
+<!-- Manual SVG Radar Representation -->
+<svg class="w-full h-full max-w-[320px]" viewBox="0 0 400 400">
+<!-- Background Webs -->
+<polygon fill="none" points="200,40 360,200 200,360 40,200" stroke="rgba(79, 70, 229, 0.1)" stroke-width="1.5"></polygon>
+<polygon fill="none" points="200,80 320,200 200,320 80,200" stroke="rgba(79, 70, 229, 0.1)" stroke-width="1.5"></polygon>
+<polygon fill="none" points="200,120 280,200 200,280 120,200" stroke="rgba(79, 70, 229, 0.1)" stroke-width="1.5"></polygon>
+<!-- Axis Lines -->
+<line stroke="rgba(79, 70, 229, 0.1)" stroke-width="1.5" x1="200" x2="200" y1="40" y2="360"></line>
+<line stroke="rgba(79, 70, 229, 0.1)" stroke-width="1.5" x1="40" x2="360" y1="200" y2="200"></line>
+<!-- Data Area -->
+<defs>
+<linearGradient id="radar-grad" x1="0%" x2="100%" y1="0%" y2="100%">
+<stop offset="0%" stop-color="#4f46e5" stop-opacity="0.3"></stop>
+<stop offset="100%" stop-color="#7c3aed" stop-opacity="0.3"></stop>
+</linearGradient>
+</defs>
+<polygon fill="url(#radar-grad)" points="200,64 312,200 200,344 96,200" stroke="#4f46e5" stroke-width="3"></polygon>
+<!-- Labels -->
+<text class="fill-on-surface-variant font-bold text-[12px]" text-anchor="middle" x="200" y="25">DSA</text>
+<text class="fill-on-surface-variant font-bold text-[12px]" text-anchor="start" x="375" y="205">Communication</text>
+<text class="fill-on-surface-variant font-bold text-[12px]" text-anchor="middle" x="200" y="390">Projects</text>
+<text class="fill-on-surface-variant font-bold text-[12px]" text-anchor="end" x="25" y="205">Aptitude</text>
+</svg>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-6 mt-10 pt-8 border-t border-white/40">
+<div class="text-center group cursor-default">
+<p class="text-on-surface-variant/60 font-label-sm text-label-sm uppercase tracking-widest mb-1">DSA</p>
+<p class="text-primary font-headline-md text-headline-md group-hover:scale-110 transition-transform">85%</p>
+</div>
+<div class="text-center sm:border-l border-white/40 group cursor-default">
+<p class="text-on-surface-variant/60 font-label-sm text-label-sm uppercase tracking-widest mb-1">Communication</p>
+<p class="text-primary font-headline-md text-headline-md group-hover:scale-110 transition-transform">72%</p>
+</div>
+<div class="text-center sm:border-l border-white/40 group cursor-default">
+<p class="text-on-surface-variant/60 font-label-sm text-label-sm uppercase tracking-widest mb-1">Projects</p>
+<p class="text-primary font-headline-md text-headline-md group-hover:scale-110 transition-transform">90%</p>
+</div>
+<div class="text-center sm:border-l border-white/40 group cursor-default">
+<p class="text-on-surface-variant/60 font-label-sm text-label-sm uppercase tracking-widest mb-1">Aptitude</p>
+<p class="text-primary font-headline-md text-headline-md group-hover:scale-110 transition-transform">68%</p>
+</div>
+</div>
+</div>
+<!-- Right Column: Widgets -->
+<div class="flex flex-col gap-gutter">
+<!-- Dream Company Selector -->
+<div class="glass-card rounded-xl p-inset-card">
+<h2 class="font-label-md text-label-md text-on-surface mb-5 opacity-70">Targeting Dream Company</h2>
+<div class="relative group">
+<button class="w-full flex items-center justify-between bg-white/40 border border-white p-4 rounded-xl hover:bg-white/60 transition-all">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 bg-white rounded-lg flex items-center justify-center p-2 shadow-sm border border-white">
+<img class="w-full h-full object-contain soft-3d-icon" data-alt="Google logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVSp9YuLKLgIWmwPmBU_JDgKsbr8JRalSG-e-rC2Q8sXJwfU9nMgC0ArfeMF1WaKLC6JGFvCfUOzUYHtwnugzDUwYctYx8EYQNBA4RmuWUk7Zc17ADBQjB3F8HymQd7nQVSxrIUvOXoTPUWg8-dSYDp9k1onGQjvf9m_NNBatomLI8vO9Q1tDqb5DCWeslsGO_wJ8m40reMwIsXZzR8kJ7erybOzroE-RoxvXOTXPkWfr6EekQc4Fd">
+</div>
+<span class="font-label-md text-label-md text-on-surface font-bold">Google Inc.</span>
+</div>
+<span class="material-symbols-outlined text-on-surface-variant" data-original-icon="expand_more">expand_more</span>
+</button>
+</div>
+<p class="mt-4 font-body-sm text-body-sm text-primary/70 font-semibold italic flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-original-icon="calendar_today">calendar_today</span> Next drive: October 2024
+                    </p>
+</div>
+<!-- Placement Readiness Score -->
+<div class="score-gradient rounded-xl p-inset-card text-white flex flex-col items-center justify-center text-center relative overflow-hidden">
+<!-- Ambient glow effect -->
+<div class="absolute -top-10 -right-10 w-32 h-32 bg-white/20 blur-3xl rounded-full"></div>
+<div class="absolute -bottom-10 -left-10 w-32 h-32 bg-white/10 blur-3xl rounded-full"></div>
+<h2 class="font-label-md text-label-md mb-4 opacity-90 uppercase tracking-[0.2em] font-bold">Readiness Score</h2>
+<div class="relative w-36 h-36 flex items-center justify-center mb-6">
+<svg class="absolute inset-0 w-full h-full transform -rotate-90">
+<circle class="text-white/10" cx="72" cy="72" fill="transparent" r="64" stroke="currentColor" stroke-width="10"></circle>
+<circle class="text-white drop-shadow-lg" cx="72" cy="72" fill="transparent" r="64" stroke="currentColor" stroke-dasharray="402" stroke-dashoffset="84" stroke-linecap="round" stroke-width="10"></circle>
+</svg>
+<span class="font-headline-xl text-[48px] font-black drop-shadow-md">79</span>
+</div>
+<p class="font-headline-sm text-headline-sm mb-2 drop-shadow-sm">Highly Eligible</p>
+<p class="font-body-sm text-body-sm opacity-90 leading-relaxed">You're in the top 15% of your cohort for Software Engineering roles.</p>
+</div>
+</div>
+</div>
+<!-- AI-Generated Skill Roadmap -->
+<section class="glass-card rounded-xl overflow-hidden mb-12">
+<div class="p-inset-card border-b border-white/40 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+<div>
+<h2 class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-3">
+<span class="material-symbols-outlined text-primary text-[28px] soft-3d-icon" style="font-variation-settings: 'FILL' 1;" data-original-icon="auto_awesome">auto_awesome</span>
+                        AI-Generated Skill Roadmap
+                    </h2>
+<p class="font-body-sm text-body-sm text-on-surface-variant/80 mt-1">Personalized steps based on Google's interview patterns.</p>
+</div>
+<div class="bg-white/60 text-primary border border-white/80 px-5 py-2 rounded-full font-label-sm text-label-sm flex items-center gap-3 shadow-sm">
+<div class="w-2.5 h-2.5 rounded-full bg-primary animate-pulse shadow-[0_0_8px_rgba(79,70,229,0.5)]"></div>
+                    Path: Software Engineering II
+                </div>
+</div>
+<div class="p-inset-card">
+<div class="flex flex-col gap-6">
+<!-- Step 1 (Completed) -->
+<div class="flex items-start gap-5 p-6 rounded-xl bg-white/20 border border-white/40 hover:bg-white/30 transition-all">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-emerald-500 soft-3d-icon" style="font-variation-settings: 'FILL' 1;" data-original-icon="check_circle">check_circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start">
+<h3 class="font-label-md text-label-md text-on-surface/50 line-through decoration-on-surface-variant/40">Review Big-O Notation</h3>
+<span class="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Completed</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/60 mt-1">Mastered space and time complexity for core algorithms.</p>
+</div>
+</div>
+<!-- Step 2 (Active) -->
+<div class="flex items-start gap-5 p-6 rounded-xl bg-primary/5 border border-primary/20 ring-1 ring-white shadow-xl shadow-primary/5">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-primary animate-pulse text-[28px]" data-original-icon="radio_button_checked">radio_button_checked</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between items-start mb-2">
+<h3 class="font-label-md text-headline-sm text-primary">Master Linked Lists &amp; Trees</h3>
+<span class="bg-primary text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider glowing-progress">Current Task</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/90">Practice 15 Medium-difficulty LeetCode problems specifically on Doubly Linked Lists.</p>
+<div class="mt-6 w-full bg-white/60 h-2.5 rounded-full overflow-hidden border border-white">
+<div class="bg-gradient-to-r from-primary to-violet-500 h-full w-[60%] glowing-progress" style="transition: width 1s ease-in-out"></div>
+</div>
+<div class="mt-6 flex gap-4">
+<button class="bg-primary text-white px-6 py-2 rounded-xl text-label-sm font-bold shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Start Lab</button>
+<button class="text-primary bg-white/80 border border-white px-6 py-2 rounded-xl text-label-sm font-bold hover:bg-white transition-all">View Docs</button>
+</div>
+</div>
+</div>
+<!-- Step 3 (Upcoming) -->
+<div class="flex items-start gap-5 p-6 rounded-xl border border-white/30 bg-white/10 opacity-60 grayscale-[0.3]">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-outline/40">circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h3 class="font-label-md text-label-md text-on-surface">Mock HR Interview</h3>
+<span class="text-on-surface-variant/50 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Locked</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-1">Simulate a high-pressure cultural fit round with AI Coach 'Aria'.</p>
+</div>
+</div>
+<!-- Step 4 (Upcoming) -->
+<div class="flex items-start gap-5 p-6 rounded-xl border border-white/30 bg-white/10 opacity-60 grayscale-[0.3]">
+<div class="mt-1 flex-shrink-0">
+<span class="material-symbols-outlined text-outline/40">circle</span>
+</div>
+<div class="flex-grow">
+<div class="flex justify-between">
+<h3 class="font-label-md text-label-md text-on-surface">Project Refactoring</h3>
+<span class="text-on-surface-variant/50 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider">Locked</span>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant/70 mt-1">Implement Design Patterns (Observer, Singleton) into your Portfolio Projects.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full py-12 px-gutter glass-nav mt-auto">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="text-center md:text-left">
+<span class="text-headline-sm font-black text-primary tracking-tighter">Placewise AI</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant/60 mt-2">© 2024 Placewise AI. Academic Excellence &amp; Career Readiness.</p>
+</div>
+<div class="flex flex-wrap justify-center gap-10">
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors text-label-sm font-bold" href="#">Terms of Service</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors text-label-sm font-bold" href="#">Privacy Policy</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors text-label-sm font-bold" href="#">Institutional Login</a>
+<a class="text-on-surface-variant/70 hover:text-primary transition-colors text-label-sm font-bold" href="#">Contact Support</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple micro-interactions
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('mousedown', function() {
+                this.classList.add('scale-95');
+            });
+            button.addEventListener('mouseup', function() {
+                this.classList.remove('scale-95');
+            });
+            button.addEventListener('mouseleave', function() {
+                this.classList.remove('scale-95');
+            });
+        });
+
+        // Scroll glass effect
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 20) {
+                header.classList.add('shadow-xl', 'shadow-primary/5', 'py-3');
+                header.classList.remove('py-4');
+            } else {
+                header.classList.remove('shadow-xl', 'shadow-primary/5', 'py-3');
+                header.classList.add('py-4');
+            }
+        });
+
+        // Progress bar animation
+        window.addEventListener('DOMContentLoaded', () => {
+            const progressBar = document.querySelector('.bg-gradient-to-r.from-primary.to-violet-500');
+            if (progressBar) {
+                progressBar.style.width = '0%';
+                setTimeout(() => {
+                    progressBar.style.transition = 'width 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)';
+                    progressBar.style.width = '60%';
+                }, 500);
+            }
+        });
+    </script>
+</body></html>
