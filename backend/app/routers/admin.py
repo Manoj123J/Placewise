@@ -3,6 +3,7 @@ from sqlalchemy.orm import Session
 from typing import List
 from ..database import get_db
 from .. import models, schemas
+from ..security import get_current_user
 
 router = APIRouter(prefix="/admin", tags=["admin"])
 
@@ -21,7 +22,12 @@ def create_admin(admin: schemas.AdminCreate, db: Session = Depends(get_db)):
     return new_admin
 
 @router.get("/", response_model=List[schemas.AdminResponse])
-def read_admins(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_admins(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
+):
     return db.query(models.Admin).offset(skip).limit(limit).all()
 
 @router.get("/{admin_id}", response_model=schemas.AdminResponse)

@@ -6,6 +6,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from app.database import SessionLocal
 from app import models
+from app.security import get_password_hash
 
 def seed_database():
     db = SessionLocal()
@@ -16,7 +17,8 @@ def seed_database():
             print("Seeding admins...")
             admin = models.Admin(
                 name="System Administrator",
-                email="admin@placewise.com"
+                email="admin@placewise.com",
+                password_hash=get_password_hash("password123")
             )
             db.add(admin)
             db.commit()
@@ -32,6 +34,7 @@ def seed_database():
                 models.Student(
                     name="Alex Johnson",
                     email="alex.johnson@example.com",
+                    password_hash=get_password_hash("password123"),
                     cgpa=8.9,
                     skills="React, Javascript, Python, Node.js",
                     projects="E-Commerce Platform, Chat Application"
@@ -39,6 +42,7 @@ def seed_database():
                 models.Student(
                     name="Jared Sullivan",
                     email="jared.sullivan@example.com",
+                    password_hash=get_password_hash("password123"),
                     cgpa=9.2,
                     skills="Java, C++, Spring Boot, SQL",
                     projects="Distributed Key-Value Store, Compiler"
@@ -46,6 +50,7 @@ def seed_database():
                 models.Student(
                     name="Anaya Miller",
                     email="anaya.miller@example.com",
+                    password_hash=get_password_hash("password123"),
                     cgpa=7.4,
                     skills="HTML, CSS, Javascript, Figma, UI Design",
                     projects="Portfolio Website, Redesign of University Portal"
@@ -53,6 +58,7 @@ def seed_database():
                 models.Student(
                     name="Liam Kim",
                     email="liam.kim@example.com",
+                    password_hash=get_password_hash("password123"),
                     cgpa=5.8,
                     skills="Python, SQL, Data Visualization",
                     projects="Basic Data Scraper, Data Analysis Scripts"
