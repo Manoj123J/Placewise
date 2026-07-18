@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import client from '../api/client';
 
 export default function LoginPage() {
   const navigate = useNavigate();
@@ -9,14 +10,34 @@ export default function LoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [mapError, setMapError] = useState(false);
   const [googleError, setGoogleError] = useState(false);
+  const [error, setError] = useState(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(`Logging in as ${role} with ${email}`);
-    if (role === 'admin') {
-      navigate('/admin/dashboard');
-    } else {
-      navigate('/student/dashboard');
+    setError(null);
+    setIsSubmitting(true);
+    try {
+      const response = await client.post('/api/v1/auth/login', {
+        email,
+        password,
+        role
+      });
+      const { token, role: returnedRole, user } = response.data;
+      localStorage.setItem('token', token);
+      localStorage.setItem('role', returnedRole);
+      localStorage.setItem('user', JSON.stringify(user));
+      
+      if (returnedRole === 'admin') {
+        navigate('/admin/dashboard');
+      } else {
+        navigate('/student/dashboard');
+      }
+    } catch (err) {
+      console.error("Login failed:", err);
+      setError(err.response?.data?.detail || "Invalid email or database connection error");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -89,6 +110,13 @@ export default function LoginPage() {
             <h1 className="font-headline-md text-headline-md text-on-background mb-2">Welcome Back</h1>
             <p className="font-body-md text-body-md text-on-surface-variant">Please enter your credentials to continue.</p>
           </div>
+
+          {error && (
+            <div className="mb-6 p-4 bg-red-100/80 border border-red-200 text-red-800 text-label-sm font-label-md rounded-lg flex items-center gap-2 animate-pulse">
+              <span className="material-symbols-outlined text-[20px] text-red-600">error</span>
+              <span>{error}</span>
+            </div>
+          )}
           
           <form className="space-y-6" onSubmit={handleLogin}>
             {/* Role Toggle */}
@@ -162,8 +190,12 @@ export default function LoginPage() {
             </div>
             
             {/* Sign In Button */}
-            <button type="submit" className="w-full py-4 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-lg shadow-primary/20 hover:bg-secondary active:scale-[0.98] transition-all flex justify-center items-center gap-2 cursor-pointer">
-              <span>Sign In</span>
+            <button 
+              type="submit" 
+              disabled={isSubmitting} 
+              className="w-full py-4 bg-primary text-on-primary font-label-md text-label-md rounded-lg shadow-lg shadow-primary/20 hover:bg-secondary active:scale-[0.98] transition-all flex justify-center items-center gap-2 cursor-pointer disabled:opacity-50"
+            >
+              <span>{isSubmitting ? 'Signing In...' : 'Sign In'}</span>
               <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
             </button>
             

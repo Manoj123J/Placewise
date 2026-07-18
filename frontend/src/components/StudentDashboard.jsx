@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileDropdown from './ProfileDropdown';
+import client from '../api/client';
 
 const companiesList = [
   {
@@ -29,11 +30,64 @@ export default function StudentDashboard() {
   const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
   const [logoError, setLogoError] = useState(false);
 
+  const [student, setStudent] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const loggedInUser = JSON.parse(localStorage.getItem('user') || 'null');
+  const studentId = loggedInUser?.id || 1;
+
+  useEffect(() => {
+    const fetchStudent = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await client.get(`/api/v1/students/${studentId}`);
+        setStudent(response.data);
+      } catch (err) {
+        console.error("Error fetching student details:", err);
+        setError("Failed to load student data. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStudent();
+  }, [studentId]);
+
   const selectCompany = (company) => {
     setTargetCompany(company);
     setLogoError(false);
     setIsCompanyDropdownOpen(false);
   };
+
+  if (loading) {
+    return (
+      <div className="bg-surface min-h-screen flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <span className="material-symbols-outlined text-[48px] text-primary animate-spin">sync</span>
+          <p className="font-label-md text-label-md text-on-surface-variant">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="bg-surface min-h-screen flex items-center justify-center">
+        <div className="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant shadow-lg max-w-md text-center animate-fade-in">
+          <span className="material-symbols-outlined text-[48px] text-error mb-4">error</span>
+          <h2 className="font-headline-sm text-headline-sm text-on-surface mb-2">Error Loading Data</h2>
+          <p className="font-body-md text-body-md text-on-surface-variant mb-6">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="px-6 py-2.5 bg-primary text-on-primary font-label-md text-label-md rounded-lg hover:bg-secondary active:scale-[0.98] transition-all cursor-pointer"
+          >
+            Retry
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-surface min-h-screen">
@@ -55,7 +109,7 @@ export default function StudentDashboard() {
                 Start Assessment
               </button>
             </Link>
-            <ProfileDropdown />
+            <ProfileDropdown student={student} />
             {/* Mobile Menu Toggle Button */}
             <button 
               className="md:hidden p-1.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer"
@@ -88,7 +142,7 @@ export default function StudentDashboard() {
       <main className="max-w-container-max mx-auto px-gutter py-stack-lg flex flex-col gap-stack-lg">
         {/* Welcome Header */}
         <section>
-          <h1 className="font-headline-lg text-headline-lg text-on-surface">Good Morning, Alex.</h1>
+          <h1 className="font-headline-lg text-headline-lg text-on-surface">Good Morning, {student?.name || 'Student'}.</h1>
           <p className="font-body-md text-body-md text-on-surface-variant">Here is your current career readiness overview for your dream roles.</p>
         </section>
 

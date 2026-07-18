@@ -8,9 +8,13 @@ const mockData = [
   { subject: 'Aptitude', A: 68, fullMark: 100 },
 ];
 
-export default function ProfileDropdown() {
+export default function ProfileDropdown({ student }) {
   const [isOpen, setIsOpen] = useState(false);
   const [imageError, setImageError] = useState(false);
+
+  const name = student?.name || "Alex Johnson";
+  const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) || "AJ";
+  const subtitle = student ? `CGPA: ${student.cgpa}` : "Computer Science, Year 4";
 
   return (
     <div className="relative">
@@ -19,12 +23,12 @@ export default function ProfileDropdown() {
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="text-right hidden sm:block">
-          <p className="font-label-md text-label-md text-on-surface">Alex Johnson</p>
-          <p className="font-body-sm text-body-sm text-on-surface-variant">Computer Science, Year 4</p>
+          <p className="font-label-md text-label-md text-on-surface">{name}</p>
+          <p className="font-body-sm text-body-sm text-on-surface-variant">{subtitle}</p>
         </div>
         {imageError ? (
           <div className="w-10 h-10 rounded-full border-2 border-primary-container bg-primary/20 flex items-center justify-center text-primary font-extrabold text-sm select-none">
-            AJ
+            {initials}
           </div>
         ) : (
           <img 

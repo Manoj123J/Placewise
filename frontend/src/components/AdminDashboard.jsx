@@ -1,10 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import client from '../api/client';
 
 export default function AdminDashboard() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [rev1Error, setRev1Error] = useState(false);
   const [rev2Error, setRev2Error] = useState(false);
+
+  const [students, setStudents] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const response = await client.get('/api/v1/students');
+        setStudents(response.data);
+      } catch (err) {
+        console.error("Error fetching students list:", err);
+        setError("Failed to load students data.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchStudents();
+  }, []);
+
+  const totalStudents = students.length;
+  const placedCount = students.filter(s => s.cgpa >= 8.5).length;
+  const successRate = totalStudents ? Math.round((placedCount / totalStudents) * 100) : 0;
+  const eligibleCount = students.filter(s => s.cgpa >= 6.5).length;
+  const atRiskCount = students.filter(s => s.cgpa < 6.5).length;
 
   return (
     <div className="bg-background text-on-surface font-body-md min-h-screen flex flex-col md:flex-row">
@@ -159,9 +187,9 @@ export default function AdminDashboard() {
           <div className="bg-surface-container-lowest p-inset-card rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
             <div>
               <p className="text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Total Students</p>
-              <h3 className="text-headline-md font-bold text-on-surface">1,248</h3>
+              <h3 className="text-headline-md font-bold text-on-surface">{loading ? '...' : totalStudents}</h3>
               <p className="text-body-sm text-emerald-600 flex items-center gap-1 mt-1">
-                <span className="material-symbols-outlined text-[16px]">trending_up</span> +12% vs last year
+                <span className="material-symbols-outlined text-[16px]">trending_up</span> Live from database
               </p>
             </div>
             <div className="w-12 h-12 bg-primary-fixed rounded-full flex items-center justify-center text-primary">
@@ -172,11 +200,11 @@ export default function AdminDashboard() {
           <div className="bg-surface-container-lowest p-inset-card rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
             <div>
               <p className="text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Placed</p>
-              <h3 className="text-headline-md font-bold text-on-surface">842</h3>
+              <h3 className="text-headline-md font-bold text-on-surface">{loading ? '...' : placedCount}</h3>
               <div className="w-32 h-2 bg-surface-container mt-3 rounded-full overflow-hidden">
-                <div className="bg-primary h-full rounded-full" style={{ width: '67.4%' }}></div>
+                <div className="bg-primary h-full rounded-full" style={{ width: `${successRate}%` }}></div>
               </div>
-              <p className="text-label-sm mt-1 text-on-surface-variant">67.4% Success Rate</p>
+              <p className="text-label-sm mt-1 text-on-surface-variant">{successRate}% Success Rate</p>
             </div>
             <div className="w-12 h-12 bg-secondary-fixed rounded-full flex items-center justify-center text-secondary">
               <span className="material-symbols-outlined">assignment_turned_in</span>
@@ -186,9 +214,9 @@ export default function AdminDashboard() {
           <div className="bg-surface-container-lowest p-inset-card rounded-xl border border-outline-variant shadow-sm flex items-center justify-between">
             <div>
               <p className="text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Eligible</p>
-              <h3 className="text-headline-md font-bold text-on-surface">1,012</h3>
+              <h3 className="text-headline-md font-bold text-on-surface">{loading ? '...' : eligibleCount}</h3>
               <p className="text-body-sm text-tertiary flex items-center gap-1 mt-1">
-                <span className="material-symbols-outlined text-[16px]">priority_high</span> 236 students at risk
+                <span className="material-symbols-outlined text-[16px]">priority_high</span> {atRiskCount} students at risk
               </p>
             </div>
             <div className="w-12 h-12 bg-tertiary-fixed rounded-full flex items-center justify-center text-tertiary">
@@ -230,100 +258,87 @@ export default function AdminDashboard() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-outline-variant">
-                  {/* Ready Row */}
-                  <tr className="hover:bg-surface transition-colors group">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary-fixed font-bold text-sm">JS</div>
-                        <div>
-                          <div className="text-body-md font-semibold text-on-surface">Jared Sullivan</div>
-                          <div className="text-label-sm text-on-surface-variant">Computer Science</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-body-md text-on-surface">9.2</td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col items-center">
-                        <span className="text-body-sm font-bold text-primary">94/100</span>
-                        <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden mt-1">
-                          <div className="bg-primary h-full" style={{ width: '94%' }}></div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-green-100 text-green-700">Ready</span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button className="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                        <span className="material-symbols-outlined">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
-                  
-                  {/* At Risk Row */}
-                  <tr className="hover:bg-surface transition-colors group">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-tertiary-fixed-dim flex items-center justify-center text-tertiary-fixed font-bold text-sm">AM</div>
-                        <div>
-                          <div className="text-body-md font-semibold text-on-surface">Anaya Miller</div>
-                          <div className="text-label-sm text-on-surface-variant">Information Systems</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-body-md text-on-surface">7.4</td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col items-center">
-                        <span className="text-body-sm font-bold text-tertiary">62/100</span>
-                        <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden mt-1">
-                          <div className="bg-tertiary h-full" style={{ width: '62%' }}></div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-700">At Risk</span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button className="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                        <span className="material-symbols-outlined">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
-                  
-                  {/* Ineligible Row */}
-                  <tr className="hover:bg-surface transition-colors group">
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-error-container flex items-center justify-center text-error font-bold text-sm">LK</div>
-                        <div>
-                          <div className="text-body-md font-semibold text-on-surface">Liam Kim</div>
-                          <div className="text-label-sm text-on-surface-variant">Data Engineering</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 text-body-md text-on-surface">5.8</td>
-                    <td className="px-6 py-4">
-                      <div className="flex flex-col items-center">
-                        <span className="text-body-sm font-bold text-error">45/100</span>
-                        <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden mt-1">
-                          <div className="bg-error h-full" style={{ width: '45%' }}></div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold bg-red-100 text-red-700">Ineligible</span>
-                    </td>
-                    <td className="px-6 py-4 text-right">
-                      <button className="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
-                        <span className="material-symbols-outlined">more_vert</span>
-                      </button>
-                    </td>
-                  </tr>
+                  {loading && (
+                    <tr>
+                      <td colSpan="5" className="px-6 py-8 text-center text-on-surface-variant">
+                        <span className="material-symbols-outlined animate-spin align-middle mr-2 text-primary">sync</span>
+                        Loading students list...
+                      </td>
+                    </tr>
+                  )}
+                  {error && (
+                    <tr>
+                      <td colSpan="5" className="px-6 py-8 text-center text-error">
+                        <span className="material-symbols-outlined align-middle mr-2 text-error">error</span>
+                        {error}
+                      </td>
+                    </tr>
+                  )}
+                  {!loading && !error && students.length === 0 && (
+                    <tr>
+                      <td colSpan="5" className="px-6 py-8 text-center text-on-surface-variant">
+                        No students registered yet.
+                      </td>
+                    </tr>
+                  )}
+                  {!loading && !error && students.map((student) => {
+                    const initials = student.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+                    
+                    let statusLabel = 'Ineligible';
+                    let statusClass = 'bg-red-100 text-red-700';
+                    let scoreColor = 'text-error';
+                    if (student.cgpa >= 8.5) {
+                      statusLabel = 'Ready';
+                      statusClass = 'bg-green-100 text-green-700';
+                      scoreColor = 'text-primary';
+                    } else if (student.cgpa >= 6.5) {
+                      statusLabel = 'At Risk';
+                      statusClass = 'bg-amber-100 text-amber-700';
+                      scoreColor = 'text-tertiary';
+                    }
+                    
+                    const skillScore = Math.round((student.cgpa / 10) * 100);
+
+                    return (
+                      <tr key={student.id} className="hover:bg-surface transition-colors group">
+                        <td className="px-6 py-4">
+                          <div className="flex items-center gap-3">
+                            <div className="w-9 h-9 rounded-full bg-primary-fixed-dim flex items-center justify-center text-primary-fixed font-bold text-sm">
+                              {initials}
+                            </div>
+                            <div>
+                              <div className="text-body-md font-semibold text-on-surface">{student.name}</div>
+                              <div className="text-label-sm text-on-surface-variant">{student.email}</div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4 text-body-md text-on-surface">{student.cgpa.toFixed(1)}</td>
+                        <td className="px-6 py-4">
+                          <div className="flex flex-col items-center">
+                            <span className={`text-body-sm font-bold ${scoreColor}`}>{skillScore}/100</span>
+                            <div className="w-24 h-1.5 bg-surface-container rounded-full overflow-hidden mt-1">
+                              <div className="h-full" style={{ width: `${skillScore}%`, backgroundColor: student.cgpa >= 8.5 ? '#4f46e5' : student.cgpa >= 6.5 ? '#b45309' : '#dc2626' }}></div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-6 py-4">
+                          <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-bold ${statusClass}`}>
+                            {statusLabel}
+                          </span>
+                        </td>
+                        <td className="px-6 py-4 text-right">
+                          <button className="text-on-surface-variant hover:text-primary transition-colors opacity-0 group-hover:opacity-100">
+                            <span className="material-symbols-outlined">more_vert</span>
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
             <div className="p-4 bg-surface border-t border-outline-variant flex items-center justify-between text-label-sm text-on-surface-variant">
-              <span>Showing 3 of 1,248 students</span>
+              <span>Showing {loading ? '...' : students.length} students</span>
               <div className="flex items-center gap-2">
                 <button className="p-1 hover:bg-surface-container rounded border border-outline-variant disabled:opacity-50" disabled>
                   <span className="material-symbols-outlined">chevron_left</span>
