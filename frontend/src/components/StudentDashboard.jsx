@@ -1,8 +1,40 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import ProfileDropdown from './ProfileDropdown';
 
+const companiesList = [
+  {
+    name: 'Google Inc.',
+    logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAVSp9YuLKLgIWmwPmBU_JDgKsbr8JRalSG-e-rC2Q8sXJwfU9nMgC0ArfeMF1WaKLC6JGFvCfUOzUYHtwnugzDUwYctYx8EYQNBA4RmuWUk7Zc17ADBQjB3F8HymQd7nQVSxrIUvOXoTPUWg8-dSYDp9k1onGQjvf9m_NNBatomLI8vO9Q1tDqb5DCWeslsGO_wJ8m40reMwIsXZzR8kJ7erybOzroE-RoxvXOTXPkWfr6EekQc4Fd',
+    date: 'Next drive: October 2026',
+    initials: 'G',
+  },
+  {
+    name: 'Microsoft Corp.',
+    logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuDxrdEKHMA_2Dc5QdnwusvrcNloFcOT1OBDYGF34DyaPFLLouxMDrl8EzpUsGUgsYr-OZvjaN5jx8zgOxPijZRQh5ys96Z6LArjeH2ln8KoypFzvU3bCNMkAThpysC1IT8tPEiKaJ8fJxSThR5RQUxJY46OYFYKszNKwQszyFYBkIDrw3lmMBlYGvVwLGsMUKPETLbswyNUNeZJ8_YuYe6CzEhEI-oP8h6hlXSDI268re3KdGo4_uFB',
+    date: 'Next drive: November 2026',
+    initials: 'M',
+  },
+  {
+    name: 'Meta Platforms',
+    logo: 'https://lh3.googleusercontent.com/aida-public/AB6AXuAwrkmKffXTsRGBz0eJn4niIKsgXX4cy_MW3hcxXOeMj2Ac_PbIVxUFAOhg5ZE86AswY4lAxAuEKxlVCDEyrfBWvriRDYrMJlZJVUHjNH42YOJLQQOMKAysf8zwhVAiqHuA9UOUGFVmTNA6Lb9jNcumbkm99xWNDtripPaVAsmrctqI1JThcAaUr5aopwWi5zGIkjxk4wT3rX8CuOyZy7y2Xokly35qI7_cTyXaQ7_2bj47ahAlGyRi',
+    date: 'Next drive: December 2026',
+    initials: 'F',
+  }
+];
+
 export default function StudentDashboard() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [targetCompany, setTargetCompany] = useState(companiesList[0]);
+  const [isCompanyDropdownOpen, setIsCompanyDropdownOpen] = useState(false);
+  const [logoError, setLogoError] = useState(false);
+
+  const selectCompany = (company) => {
+    setTargetCompany(company);
+    setLogoError(false);
+    setIsCompanyDropdownOpen(false);
+  };
+
   return (
     <div className="bg-surface min-h-screen">
       {/* TopNavBar */}
@@ -19,13 +51,38 @@ export default function StudentDashboard() {
           </div>
           <div className="flex items-center gap-stack-md">
             <Link to="/test">
-              <button className="hidden md:block bg-primary-container text-white px-5 py-2 rounded-lg font-label-md text-label-md hover:brightness-110 active:scale-95 transition-all">
+              <button className="hidden md:block bg-primary-container text-white px-5 py-2 rounded-lg font-label-md text-label-md hover:brightness-110 active:scale-95 transition-all cursor-pointer">
                 Start Assessment
               </button>
             </Link>
             <ProfileDropdown />
+            {/* Mobile Menu Toggle Button */}
+            <button 
+              className="md:hidden p-1.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle navigation menu"
+            >
+              <span className="material-symbols-outlined text-[28px] leading-none">
+                {isMenuOpen ? 'close' : 'menu'}
+              </span>
+            </button>
           </div>
         </div>
+
+        {/* Mobile Dropdown Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-outline-variant bg-surface-container-lowest px-gutter py-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top duration-200">
+            <Link to="/student/dashboard" className="text-primary font-bold py-2 text-label-md" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+            <Link to="#" className="text-on-surface-variant hover:text-primary py-2 text-label-md" onClick={() => setIsMenuOpen(false)}>Roadmap</Link>
+            <Link to="/test" className="text-on-surface-variant hover:text-primary py-2 text-label-md" onClick={() => setIsMenuOpen(false)}>Assessments</Link>
+            <Link to="#" className="text-on-surface-variant hover:text-primary py-2 text-label-md" onClick={() => setIsMenuOpen(false)}>Profile</Link>
+            <Link to="/test" onClick={() => setIsMenuOpen(false)} className="w-full">
+              <button className="w-full bg-primary text-on-primary py-3 rounded-lg font-label-md text-label-md active:scale-95 transition-all cursor-pointer">
+                Start Assessment
+              </button>
+            </Link>
+          </div>
+        )}
       </header>
 
       <main className="max-w-container-max mx-auto px-gutter py-stack-lg flex flex-col gap-stack-lg">
@@ -39,20 +96,54 @@ export default function StudentDashboard() {
         <div className="flex gap-gutter overflow-x-auto custom-scrollbar pb-4 -mx-gutter px-gutter md:mx-0 md:px-0">
           
           {/* Dream Company Selector Card */}
-          <div className="min-w-[300px] flex-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] p-inset-card flex flex-col">
+          <div className="min-w-[300px] flex-1 bg-surface-container-lowest border border-outline-variant rounded-xl shadow-[0_4px_6px_-1px_rgba(0,0,0,0.05)] p-inset-card flex flex-col relative">
             <h2 className="font-label-md text-label-md text-on-surface mb-4">Targeting Dream Company</h2>
-            <div className="relative group">
-              <button className="w-full flex items-center justify-between bg-surface-container-low border border-outline-variant p-3 rounded-lg hover:border-primary-container transition-all">
+            <div className="relative">
+              <button 
+                className="w-full flex items-center justify-between bg-surface-container-low border border-outline-variant p-3 rounded-lg hover:border-primary-container transition-all cursor-pointer"
+                onClick={() => setIsCompanyDropdownOpen(!isCompanyDropdownOpen)}
+              >
                 <div className="flex items-center gap-3">
-                  <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center p-1 border border-outline-variant">
-                    <img className="w-full h-full object-contain" alt="Google Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAVSp9YuLKLgIWmwPmBU_JDgKsbr8JRalSG-e-rC2Q8sXJwfU9nMgC0ArfeMF1WaKLC6JGFvCfUOzUYHtwnugzDUwYctYx8EYQNBA4RmuWUk7Zc17ADBQjB3F8HymQd7nQVSxrIUvOXoTPUWg8-dSYDp9k1onGQjvf9m_NNBatomLI8vO9Q1tDqb5DCWeslsGO_wJ8m40reMwIsXZzR8kJ7erybOzroE-RoxvXOTXPkWfr6EekQc4Fd" />
+                  <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center p-1 border border-outline-variant overflow-hidden">
+                    {logoError ? (
+                      <div className="w-full h-full bg-primary/20 text-primary font-bold flex items-center justify-center rounded text-sm select-none">
+                        {targetCompany.initials}
+                      </div>
+                    ) : (
+                      <img 
+                        className="w-full h-full object-contain" 
+                        alt={`${targetCompany.name} Logo`} 
+                        src={targetCompany.logo} 
+                        onError={() => setLogoError(true)}
+                      />
+                    )}
                   </div>
-                  <span className="font-label-md text-label-md text-on-surface">Google Inc.</span>
+                  <span className="font-label-md text-label-md text-on-surface">{targetCompany.name}</span>
                 </div>
                 <span className="material-symbols-outlined text-on-surface-variant">expand_more</span>
               </button>
+
+              {isCompanyDropdownOpen && (
+                <>
+                  <div className="fixed inset-0 z-10" onClick={() => setIsCompanyDropdownOpen(false)} />
+                  <div className="absolute left-0 right-0 mt-2 bg-surface-container-lowest border border-outline-variant rounded-lg shadow-xl z-20 overflow-hidden divide-y divide-outline-variant">
+                    {companiesList.map((company) => (
+                      <button
+                        key={company.name}
+                        onClick={() => selectCompany(company)}
+                        className="w-full flex items-center gap-3 p-3 hover:bg-surface-container transition-colors text-left cursor-pointer"
+                      >
+                        <div className="w-6 h-6 bg-white rounded flex items-center justify-center p-0.5 border border-outline-variant text-[10px] font-bold text-primary overflow-hidden">
+                          {company.initials}
+                        </div>
+                        <span className="font-label-sm text-label-sm text-on-surface">{company.name}</span>
+                      </button>
+                    ))}
+                  </div>
+                </>
+              )}
             </div>
-            <p className="mt-4 font-body-sm text-body-sm text-on-surface-variant italic mt-auto">Next drive: October 2024</p>
+            <p className="mt-4 font-body-sm text-body-sm text-on-surface-variant italic mt-auto">{targetCompany.date}</p>
           </div>
 
           {/* Placement Readiness Score Card */}

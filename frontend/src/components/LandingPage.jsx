@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function LandingPage() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [avatarError, setAvatarError] = useState(false);
+  const [previewError, setPreviewError] = useState(false);
+
   return (
     <div className="bg-background text-on-surface font-body-md overflow-x-hidden min-h-screen">
       {/* TopNavBar Implementation */}
@@ -20,20 +24,56 @@ export default function LandingPage() {
           </div>
           <div className="flex items-center gap-4">
             <Link to="/test">
-                <button className="hidden md:block bg-primary text-on-primary px-6 py-2 rounded-full font-label-md text-label-md active:scale-95 transition-transform duration-150">
+                <button className="hidden md:block bg-primary text-on-primary px-6 py-2 rounded-full font-label-md text-label-md active:scale-95 transition-transform duration-150 cursor-pointer">
                 Start Assessment
                 </button>
             </Link>
-            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20">
-              <img className="w-full h-full object-cover" alt="A professional headshot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO2dP7Wt-yzhjgjTX77mkM4vQ2YdeV8S3XkVsOTRkeCyZ8yt8D6mdP-bUmxGPSPU6zt8czgVddU9VCz1ijY6RCim38Cm1FLums6uG223LtLbZdaMirgxUmpk46nthms9uX5QRBevlv3WTiS5kRmTO5jdM_Sd4ggGbjxJqUEEu4QVbviMpadNzK9sjuRq1DK3xvf_GLpGQmfFErPJ-VlAy68dwIO2ye5cq90ib1fNqzCJrLTE9HSpsp" />
+            <div className="w-10 h-10 rounded-full overflow-hidden border-2 border-primary/20 flex items-center justify-center">
+              {avatarError ? (
+                <div className="w-full h-full bg-primary/20 text-primary flex items-center justify-center font-bold text-sm select-none">
+                  AJ
+                </div>
+              ) : (
+                <img 
+                  className="w-full h-full object-cover" 
+                  alt="A professional headshot" 
+                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBO2dP7Wt-yzhjgjTX77mkM4vQ2YdeV8S3XkVsOTRkeCyZ8yt8D6mdP-bUmxGPSPU6zt8czgVddU9VCz1ijY6RCim38Cm1FLums6uG223LtLbZdaMirgxUmpk46nthms9uX5QRBevlv3WTiS5kRmTO5jdM_Sd4ggGbjxJqUEEu4QVbviMpadNzK9sjuRq1DK3xvf_GLpGQmfFErPJ-VlAy68dwIO2ye5cq90ib1fNqzCJrLTE9HSpsp" 
+                  onError={() => setAvatarError(true)}
+                />
+              )}
             </div>
+            {/* Mobile Menu Button */}
+            <button 
+              className="md:hidden p-1.5 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle navigation menu"
+            >
+              <span className="material-symbols-outlined text-[28px] leading-none">
+                {isMenuOpen ? 'close' : 'menu'}
+              </span>
+            </button>
           </div>
         </nav>
+
+        {/* Mobile Dropdown Navigation */}
+        {isMenuOpen && (
+          <div className="md:hidden border-t border-outline-variant bg-surface-container-lowest px-gutter py-4 flex flex-col gap-4 shadow-lg animate-in slide-in-from-top duration-200">
+            <Link to="/student/dashboard" className="text-on-surface-variant hover:text-primary py-2 text-label-md font-label-md" onClick={() => setIsMenuOpen(false)}>Dashboard</Link>
+            <Link to="#" className="text-on-surface-variant hover:text-primary py-2 text-label-md font-label-md" onClick={() => setIsMenuOpen(false)}>Roadmap</Link>
+            <Link to="/test" className="text-on-surface-variant hover:text-primary py-2 text-label-md font-label-md" onClick={() => setIsMenuOpen(false)}>Assessments</Link>
+            <Link to="#" className="text-on-surface-variant hover:text-primary py-2 text-label-md font-label-md" onClick={() => setIsMenuOpen(false)}>Profile</Link>
+            <Link to="/test" onClick={() => setIsMenuOpen(false)} className="w-full">
+              <button className="w-full bg-primary text-on-primary py-3 rounded-full font-label-md text-label-md active:scale-[0.98] transition-transform cursor-pointer">
+                Start Assessment
+              </button>
+            </Link>
+          </div>
+        )}
       </header>
 
       <main>
         {/* Hero Section */}
-        <section className="relative overflow-hidden pt-20 pb-32 px-gutter">
+        <section className="relative overflow-hidden pt-12 pb-24 md:pt-20 md:pb-32 px-gutter">
           {/* Background Decorative Elements */}
           <div className="absolute top-0 right-0 -z-10 w-1/2 h-full opacity-10"></div>
           <div className="absolute -top-24 -left-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
@@ -43,18 +83,18 @@ export default function LandingPage() {
                 <span className="material-symbols-outlined text-sm" style={{ fontVariationSettings: "'FILL' 1" }}>auto_awesome</span>
                 <span className="text-label-sm font-label-sm uppercase tracking-wider">AI-Powered Career Intelligence</span>
               </div>
-              <h1 className="text-headline-xl font-headline-xl md:text-6xl text-on-surface leading-[1.1] max-w-xl">
+              <h1 className="text-headline-xl font-headline-xl text-[28px] sm:text-[36px] md:text-6xl text-on-surface leading-[1.15] max-w-xl">
                 Elevate Your Career Readiness with <span className="text-primary">Placewise AI</span>
               </h1>
               <p className="text-body-lg font-body-lg text-on-surface-variant max-w-lg">
                 The intelligent roadmap to your dream campus placement. We bridge the gap between academic learning and industry expectations using personalized AI insights.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
-                <Link to="/login" className="bg-primary text-on-primary px-8 py-4 rounded-xl font-headline-sm text-headline-sm hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 group">
+                <Link to="/login" className="bg-primary text-on-primary px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-headline-sm text-[16px] md:text-[20px] hover:bg-primary/90 transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 group">
                   Student Login
                   <span className="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
                 </Link>
-                <Link to="/admin/dashboard" className="bg-surface-container-highest text-on-surface px-8 py-4 rounded-xl font-headline-sm text-headline-sm hover:bg-surface-container-high transition-all flex items-center justify-center gap-2 border border-outline-variant">
+                <Link to="/admin/dashboard" className="bg-surface-container-highest text-on-surface px-6 py-3.5 md:px-8 md:py-4 rounded-xl font-headline-sm text-[16px] md:text-[20px] hover:bg-surface-container-high transition-all flex items-center justify-center gap-2 border border-outline-variant">
                   Admin Login
                 </Link>
               </div>
@@ -78,7 +118,22 @@ export default function LandingPage() {
             <div className="relative hidden lg:block animate-float">
               <div className="absolute -inset-4 bg-primary/10 rounded-3xl -rotate-2"></div>
               <div className="relative glass-card border border-outline-variant rounded-3xl p-8 shadow-2xl">
-                <img className="rounded-xl w-full shadow-lg border border-outline-variant" alt="Dashboard Preview" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5MvYSuiAUPJVk6lLzymDRclRnwYdi8F3Zj8msMpdw5Gie8CCttSJPlHmRLuJ3_sXtA5YreuXK6rNqS1V5I_6Ej1lC70FN7qa7uexanHoLHqS4-eiGSidL75MSXZVVMD2v3u4RKKPlkg4LWeUFUYGA0fA92UG0JFqKPZ-keuh0muIlEk10OoB9T2Hf6WrNLM3lnpzLHCC18IBPWl1bNJ54DbU98cRebVIca1WSU_AQyCTYmkj-5MkP" />
+                {previewError ? (
+                  <div className="w-full h-[280px] rounded-xl bg-surface-container-high/60 flex flex-col items-center justify-center border border-outline-variant p-8 text-center shadow-inner">
+                    <span className="material-symbols-outlined text-primary text-5xl mb-4" style={{ fontVariationSettings: "'FILL' 1" }}>analytics</span>
+                    <h4 className="font-headline-sm text-headline-sm text-on-surface mb-2">Readiness Dashboard</h4>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant max-w-sm mx-auto">
+                      Real-time assessment feedback, custom roadmaps, and college coordinator insight tracking.
+                    </p>
+                  </div>
+                ) : (
+                  <img 
+                    className="rounded-xl w-full shadow-lg border border-outline-variant" 
+                    alt="Dashboard Preview" 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5MvYSuiAUPJVk6lLzymDRclRnwYdi8F3Zj8msMpdw5Gie8CCttSJPlHmRLuJ3_sXtA5YreuXK6rNqS1V5I_6Ej1lC70FN7qa7uexanHoLHqS4-eiGSidL75MSXZVVMD2v3u4RKKPlkg4LWeUFUYGA0fA92UG0JFqKPZ-keuh0muIlEk10OoB9T2Hf6WrNLM3lnpzLHCC18IBPWl1bNJ54DbU98cRebVIca1WSU_AQyCTYmkj-5MkP" 
+                    onError={() => setPreviewError(true)}
+                  />
+                )}
                 {/* Floating Badge */}
                 <div className="absolute -bottom-6 -left-6 bg-white p-4 rounded-2xl shadow-xl border border-outline-variant flex items-center gap-4 animate-bounce">
                   <div className="bg-green-100 p-2 rounded-full">

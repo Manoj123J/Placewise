@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function TestPage() {
   const [timeLeft, setTimeLeft] = useState(45 * 60); // 45 minutes in seconds
   const [showConsole, setShowConsole] = useState(false);
+  const lineNumbersRef = useRef(null);
   const [code, setCode] = useState(`class Solution {
     public int[] findRedundantDirectedConnection(int[][] edges) {
         // Initialize Union-Find structure
@@ -36,6 +37,12 @@ export default function TestPage() {
     return () => clearInterval(timer);
   }, []);
 
+  const handleTextareaScroll = (e) => {
+    if (lineNumbersRef.current) {
+      lineNumbersRef.current.scrollTop = e.target.scrollTop;
+    }
+  };
+
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
   const isCriticalTime = timeLeft < 300;
@@ -43,32 +50,32 @@ export default function TestPage() {
   return (
     <div className="bg-background text-on-surface font-body-md h-screen flex flex-col overflow-hidden">
       {/* Top Assessment Header */}
-      <header className="bg-surface-container-lowest border-b border-outline-variant px-gutter py-4 flex justify-between items-center z-50">
-        <div className="flex items-center gap-4">
-          <div className="flex items-center gap-2">
-            <span className="text-primary font-black text-headline-sm">Placewise</span>
-            <div className="h-6 w-[1px] bg-outline-variant mx-2"></div>
-            <h1 className="text-on-surface font-headline-sm">DSA Advanced: Graph Algorithms</h1>
+      <header className="bg-surface-container-lowest border-b border-outline-variant px-4 sm:px-gutter py-4 flex justify-between items-center z-50 gap-2">
+        <div className="flex items-center gap-4 min-w-0">
+          <div className="flex items-center gap-2 min-w-0">
+            <span className="text-primary font-black text-headline-sm hidden sm:block">Placewise</span>
+            <div className="h-6 w-[1px] bg-outline-variant mx-2 hidden sm:block"></div>
+            <h1 className="text-on-surface font-headline-sm text-[14px] sm:text-headline-sm truncate max-w-[180px] sm:max-w-none">DSA Advanced: Graph Algorithms</h1>
           </div>
         </div>
-        <div className="flex items-center gap-6">
+        <div className="flex items-center gap-3 sm:gap-6 shrink-0">
           {/* Live Timer */}
           <div 
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors duration-500 ${isCriticalTime ? 'bg-error-container text-on-error-container' : 'bg-surface-container'}`}
+            className={`flex items-center gap-1.5 px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-lg transition-colors duration-500 ${isCriticalTime ? 'bg-error-container text-on-error-container' : 'bg-surface-container'}`}
           >
-            <span className={`material-symbols-outlined ${isCriticalTime ? 'text-error animate-pulse' : 'text-on-surface-variant'}`}>
+            <span className={`material-symbols-outlined text-[18px] ${isCriticalTime ? 'text-error animate-pulse' : 'text-on-surface-variant'}`}>
               schedule
             </span>
-            <span className={`font-mono text-headline-sm font-bold ${isCriticalTime ? 'text-error' : 'text-on-surface'}`}>
+            <span className={`font-mono text-[14px] sm:text-headline-sm font-bold ${isCriticalTime ? 'text-error' : 'text-on-surface'}`}>
               {minutes}:{seconds.toString().padStart(2, '0')}
             </span>
           </div>
-          <div className="flex items-center gap-2">
-            <button className="flex items-center gap-1 text-label-md px-3 py-1.5 rounded-lg border border-outline-variant hover:bg-surface-container transition-all">
-              <span className="material-symbols-outlined text-[18px]">settings</span>
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            <button className="flex items-center gap-1 text-label-md px-2 py-1.5 sm:px-3 rounded-lg border border-outline-variant hover:bg-surface-container transition-all cursor-pointer">
+              <span className="material-symbols-outlined text-[16px] sm:text-[18px]">settings</span>
             </button>
             <Link to="/student/dashboard">
-              <button className="flex items-center gap-1 text-label-md px-3 py-1.5 rounded-lg border border-outline-variant text-error hover:bg-error-container transition-all">
+              <button className="flex items-center gap-1 text-label-md px-2.5 py-1.5 sm:px-3 rounded-lg border border-outline-variant text-error hover:bg-error-container transition-all cursor-pointer">
                 Quit
               </button>
             </Link>
@@ -77,9 +84,9 @@ export default function TestPage() {
       </header>
 
       {/* Main Content: Split Screen */}
-      <main className="flex-grow flex overflow-hidden">
-        {/* Left Panel: Problem Description (40%) */}
-        <section className="w-[40%] border-r border-outline-variant bg-surface flex flex-col overflow-hidden">
+      <main className="flex-grow flex flex-col lg:flex-row overflow-hidden">
+        {/* Left Panel: Problem Description (40% on large, stacked on mobile) */}
+        <section className="w-full lg:w-[40%] h-[40vh] lg:h-full border-b lg:border-b-0 lg:border-r border-outline-variant bg-surface flex flex-col overflow-hidden">
           <div className="px-6 py-4 border-b border-outline-variant flex items-center justify-between bg-surface-container-low">
             <div className="flex gap-4">
               <button className="text-primary font-bold border-b-2 border-primary pb-1 text-label-md">Problem</button>
@@ -91,7 +98,7 @@ export default function TestPage() {
               <span className="text-on-surface-variant text-label-sm">ID: 4829</span>
             </div>
           </div>
-          <div className="flex-grow overflow-y-auto custom-scrollbar p-8">
+          <div className="flex-grow overflow-y-auto custom-scrollbar p-6 sm:p-8">
             <article className="max-w-none">
               <h2 className="text-headline-md mb-4 text-on-surface">14. Redundant Connection II</h2>
               <p className="text-body-md text-on-surface-variant mb-6 leading-relaxed">
@@ -140,10 +147,10 @@ export default function TestPage() {
           </div>
         </section>
 
-        {/* Right Panel: Editor (60%) */}
-        <section className="w-[60%] flex flex-col bg-inverse-surface relative overflow-hidden text-white">
+        {/* Right Panel: Editor (60% on large, stacked below on mobile) */}
+        <section className="w-full lg:w-[60%] h-[60vh] lg:h-full flex flex-col bg-inverse-surface relative overflow-hidden text-white">
           {/* Editor Toolbar */}
-          <div className="h-12 border-b border-white/20 px-4 flex items-center justify-between bg-[#1e232c]">
+          <div className="h-12 border-b border-white/20 px-4 flex items-center justify-between bg-[#1e232c] select-none shrink-0">
             <div className="flex items-center gap-4">
               <div className="relative">
                 <select className="bg-transparent text-white text-label-md border-none focus:ring-0 appearance-none cursor-pointer pr-6 outline-none">
@@ -154,13 +161,13 @@ export default function TestPage() {
                 <span className="material-symbols-outlined text-white/50 text-[18px] absolute right-0 top-1/2 -translate-y-1/2 pointer-events-none">expand_more</span>
               </div>
               <div className="h-4 w-[1px] bg-white/20"></div>
-              <button className="text-white/70 hover:text-white transition-colors flex items-center gap-1 text-label-sm">
+              <button className="text-white/70 hover:text-white transition-colors flex items-center gap-1 text-label-sm cursor-pointer">
                 <span className="material-symbols-outlined text-[18px]">auto_fix_high</span>
                 Auto-format
               </button>
             </div>
             <div className="flex items-center gap-3">
-              <button className="text-white/70 hover:text-white transition-colors">
+              <button className="text-white/70 hover:text-white transition-colors cursor-pointer">
                 <span className="material-symbols-outlined">fullscreen</span>
               </button>
             </div>
@@ -168,27 +175,31 @@ export default function TestPage() {
           
           {/* Code Content Area */}
           <div className="flex-grow flex font-mono text-body-md overflow-hidden relative bg-[#151c27]">
-            {/* Line Numbers */}
-            <div className="w-12 bg-[#1e232c] border-r border-white/5 flex flex-col items-center py-4 text-white/30 select-none">
-              {Array.from({ length: 25 }, (_, i) => (
-                <span key={i + 1}>{i + 1}</span>
+            {/* Line Numbers - Scrollable container synced to textarea scroll */}
+            <div 
+              ref={lineNumbersRef}
+              className="w-12 bg-[#1e232c] border-r border-white/5 flex flex-col items-center py-4 text-white/30 select-none overflow-hidden h-full"
+            >
+              {Array.from({ length: 40 }, (_, i) => (
+                <span key={i + 1} className="leading-relaxed">{i + 1}</span>
               ))}
             </div>
             
             {/* Editor Surface */}
             <textarea
-              className="flex-grow p-4 bg-transparent text-white/90 overflow-y-auto custom-scrollbar leading-relaxed resize-none outline-none font-mono text-body-md whitespace-pre"
+              className="flex-grow p-4 bg-transparent text-white/90 overflow-y-auto custom-scrollbar leading-relaxed resize-none outline-none font-mono text-body-md whitespace-pre h-full"
               value={code}
               onChange={(e) => setCode(e.target.value)}
+              onScroll={handleTextareaScroll}
               spellCheck="false"
             />
           </div>
           
           {/* Console / Action Bar */}
-          <div className="h-24 bg-surface-container-lowest border-t border-outline-variant flex items-center justify-between px-8 text-on-surface">
-            <div className="flex items-center gap-4">
+          <div className="h-24 bg-surface-container-lowest border-t border-outline-variant flex flex-col sm:flex-row sm:items-center justify-between p-4 sm:px-8 text-on-surface gap-4 shrink-0 overflow-y-auto">
+            <div className="flex items-center gap-4 min-w-0">
               <button 
-                className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors"
+                className="flex items-center gap-2 text-on-surface-variant hover:text-on-surface transition-colors cursor-pointer select-none shrink-0"
                 onClick={() => setShowConsole(!showConsole)}
               >
                 <span className="material-symbols-outlined">terminal</span>
@@ -196,21 +207,21 @@ export default function TestPage() {
               </button>
               
               {showConsole && (
-                <div className="flex animate-in slide-in-from-bottom-2">
-                  <span className="flex items-center gap-1 text-emerald-600 text-label-sm">
-                    <span className="material-symbols-outlined text-[18px]">check_circle</span>
-                    Test case 1 passed
+                <div className="flex animate-in slide-in-from-bottom-2 min-w-0">
+                  <span className="flex items-center gap-1 text-emerald-600 text-label-sm truncate">
+                    <span className="material-symbols-outlined text-[18px] shrink-0">check_circle</span>
+                    <span className="truncate">Test case 1 passed</span>
                   </span>
                 </div>
               )}
             </div>
             
-            <div className="flex items-center gap-4">
-              <button className="px-6 py-2.5 rounded-lg border border-outline-variant font-label-md text-on-surface hover:bg-surface-container transition-all active:scale-95">
-                Run Code
+            <div className="flex items-center gap-3 sm:gap-4 shrink-0 w-full sm:w-auto justify-end">
+              <button className="px-4 py-2 sm:px-6 sm:py-2.5 rounded-lg border border-outline-variant font-label-md text-on-surface hover:bg-surface-container transition-all active:scale-95 cursor-pointer">
+                Run
               </button>
-              <button className="px-8 py-2.5 rounded-lg bg-primary text-white font-label-md shadow-sm hover:shadow-md transition-all active:scale-95">
-                Submit Solution
+              <button className="px-5 py-2 sm:px-8 sm:py-2.5 rounded-lg bg-primary text-white font-label-md shadow-sm hover:shadow-md transition-all active:scale-95 cursor-pointer">
+                Submit
               </button>
             </div>
           </div>

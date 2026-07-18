@@ -1,23 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function AdminDashboard() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [rev1Error, setRev1Error] = useState(false);
+  const [rev2Error, setRev2Error] = useState(false);
+
   return (
-    <div className="bg-background text-on-surface font-body-md min-h-screen flex">
-      {/* SideNavBar */}
-      <aside className="fixed h-full left-0 w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-4 gap-stack-md z-40">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
-            <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
+    <div className="bg-background text-on-surface font-body-md min-h-screen flex flex-col md:flex-row">
+      {/* Mobile Sticky Header Bar */}
+      <div className="md:hidden flex items-center justify-between p-4 bg-surface-container-lowest border-b border-outline-variant sticky top-0 z-30 w-full select-none">
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded bg-primary flex items-center justify-center text-on-primary">
+            <span className="material-symbols-outlined text-[20px]" style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
           </div>
-          <div>
-            <h1 className="text-headline-sm font-black text-primary">Admin Panel</h1>
-            <p className="text-label-sm text-on-surface-variant">University Placement</p>
+          <span className="font-bold text-primary text-label-md">Admin Panel</span>
+        </div>
+        <button 
+          className="p-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer"
+          onClick={() => setIsSidebarOpen(true)}
+          aria-label="Open sidebar menu"
+        >
+          <span className="material-symbols-outlined text-[28px] leading-none">menu</span>
+        </button>
+      </div>
+
+      {/* SideNavBar Dim Backdrop on Mobile */}
+      {isSidebarOpen && (
+        <div 
+          className="fixed inset-0 bg-black/40 z-40 md:hidden"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      {/* SideNavBar Drawer */}
+      <aside className={`fixed h-full left-0 w-64 bg-surface-container-low border-r border-outline-variant flex flex-col p-4 gap-stack-md z-50 transform transition-transform duration-300 md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className="flex items-center justify-between md:justify-start gap-3 mb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-on-primary">
+              <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>school</span>
+            </div>
+            <div>
+              <h1 className="text-headline-sm font-black text-primary">Admin Panel</h1>
+              <p className="text-label-sm text-on-surface-variant">University Placement</p>
+            </div>
           </div>
+          {/* Close button for sidebar on mobile */}
+          <button 
+            className="md:hidden p-1.5 text-on-surface-variant hover:text-primary cursor-pointer transition-colors"
+            onClick={() => setIsSidebarOpen(false)}
+          >
+            <span className="material-symbols-outlined">close</span>
+          </button>
         </div>
         
         <nav className="flex-1 space-y-1">
-          <Link to="/admin/dashboard" className="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container font-bold rounded-lg translate-x-1 transition-transform duration-200 group relative">
+          <Link to="/admin/dashboard" onClick={() => setIsSidebarOpen(false)} className="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container font-bold rounded-lg translate-x-1 transition-transform duration-200 group relative">
             <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M3 13H11V3H3V13ZM3 21H11V15H3V21ZM13 21H21V11H13V21ZM13 3V9H21V3H13Z" fill="currentColor"></path>
             </svg>
@@ -55,7 +93,7 @@ export default function AdminDashboard() {
         </nav>
         
         <div className="mt-auto space-y-1 pt-4 border-t border-outline-variant">
-          <button className="w-full mb-4 py-2 px-4 bg-primary text-on-primary rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm">
+          <button className="w-full mb-4 py-2 px-4 bg-primary text-on-primary rounded-lg font-label-md hover:bg-primary-container transition-colors shadow-sm cursor-pointer select-none">
             Export Data
           </button>
           <Link to="#" className="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:text-primary transition-colors">
@@ -70,7 +108,7 @@ export default function AdminDashboard() {
       </aside>
 
       {/* Main Content Area */}
-      <main className="flex-1 ml-64 p-gutter max-w-container-max mx-auto w-full flex flex-col">
+      <main className="flex-1 md:ml-64 p-gutter max-w-container-max mx-auto w-full flex flex-col min-h-screen">
         {/* Header Section */}
         <header className="mb-stack-lg flex flex-col md:flex-row md:items-end justify-between gap-4">
           <div>
@@ -79,16 +117,34 @@ export default function AdminDashboard() {
               <span className="material-symbols-outlined text-[14px]">chevron_right</span>
               <span>Dashboard</span>
             </nav>
-            <h2 className="text-headline-lg font-headline-lg text-on-surface">Placement Cell Overview - 2024 Cohort</h2>
+            <h2 className="text-headline-lg font-headline-lg text-[22px] sm:text-[26px] md:text-headline-lg text-on-surface">Placement Cell Overview - 2024 Cohort</h2>
           </div>
           
-          <div className="flex items-center gap-stack-sm">
+          <div className="flex items-center gap-stack-sm select-none">
             <div className="flex -space-x-2">
-              <div className="w-8 h-8 rounded-full border-2 border-surface overflow-hidden">
-                <img className="w-full h-full object-cover" alt="Reviewer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP6kySrLjIT6yOPxZqAKJbl9b2UfZKKcKCFBPLyxRwdVl6nfqCP7ZQ7VTwyLRSSRPKzK4S2ub_N4NGtscteYZIWvu_OLWagEsLAW-4Pi7mFDuPN0rEo_bZL4fhA69N5Wd8kXx75MHE8SRQ8oxxtL6Ic42kC31v9EyIa6DNqID2JBg92kLc4uE8zFfr9pawwZ0unw736QK_RNbMbYOcZAhFN7EarwxV_SKJ9DhHhYkX1UchekZJyhS3" />
+              <div className="w-8 h-8 rounded-full border-2 border-surface overflow-hidden flex items-center justify-center bg-primary/20">
+                {rev1Error ? (
+                  <span className="text-primary text-[10px] font-bold">SR</span>
+                ) : (
+                  <img 
+                    className="w-full h-full object-cover" 
+                    alt="Reviewer" 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuDP6kySrLjIT6yOPxZqAKJbl9b2UfZKKcKCFBPLyxRwdVl6nfqCP7ZQ7VTwyLRSSRPKzK4S2ub_N4NGtscteYZIWvu_OLWagEsLAW-4Pi7mFDuPN0rEo_bZL4fhA69N5Wd8kXx75MHE8SRQ8oxxtL6Ic42kC31v9EyIa6DNqID2JBg92kLc4uE8zFfr9pawwZ0unw736QK_RNbMbYOcZAhFN7EarwxV_SKJ9DhHhYkX1UchekZJyhS3" 
+                    onError={() => setRev1Error(true)}
+                  />
+                )}
               </div>
-              <div className="w-8 h-8 rounded-full border-2 border-surface overflow-hidden">
-                <img className="w-full h-full object-cover" alt="Reviewer" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAexQ19qcfupwbRaRAIoCmyzetwbyb6kU-Jh_Cn9a-zvK1GnDD1hY7yWIqIHgHF_fR6d5t3sPhmrzvShZcaR4neAhbrBot3wJe_ksYMdI1ubxwvZsspDPShXkProLli3CZLQde4x4BofTJPL7lU3RBkbYSCzVN7UEw3-HTtnI3lwXOXWhehccY0zSXU5n2RBA_e0qe4l-zz36FwDl5O1q5Mpe2j3xIyGG1o8w7bn27JbIOo7JzYD13R" />
+              <div className="w-8 h-8 rounded-full border-2 border-surface overflow-hidden flex items-center justify-center bg-secondary/20">
+                {rev2Error ? (
+                  <span className="text-secondary text-[10px] font-bold">MK</span>
+                ) : (
+                  <img 
+                    className="w-full h-full object-cover" 
+                    alt="Reviewer" 
+                    src="https://lh3.googleusercontent.com/aida-public/AB6AXuAexQ19qcfupwbRaRAIoCmyzetwbyb6kU-Jh_Cn9a-zvK1GnDD1hY7yWIqIHgHF_fR6d5t3sPhmrzvShZcaR4neAhbrBot3wJe_ksYMdI1ubxwvZsspDPShXkProLli3CZLQde4x4BofTJPL7lU3RBkbYSCzVN7UEw3-HTtnI3lwXOXWhehccY0zSXU5n2RBA_e0qe4l-zz36FwDl5O1q5Mpe2j3xIyGG1o8w7bn27JbIOo7JzYD13R" 
+                    onError={() => setRev2Error(true)}
+                  />
+                )}
               </div>
               <div className="w-8 h-8 rounded-full bg-surface-container-highest border-2 border-surface flex items-center justify-center text-[10px] font-bold text-on-surface-variant">
                 +4
@@ -146,17 +202,17 @@ export default function AdminDashboard() {
           
           {/* Table Card */}
           <div className="lg:col-span-8 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm flex flex-col overflow-hidden">
-            <div className="p-inset-card flex items-center justify-between border-b border-outline-variant">
+            <div className="p-inset-card flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant">
               <div>
                 <h4 className="text-headline-sm font-bold text-on-surface">Assigned Students</h4>
                 <p className="text-body-sm text-on-surface-variant">Recent candidate assessments and status</p>
               </div>
-              <div className="flex items-center gap-2">
-                <div className="relative">
+              <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
+                <div className="relative flex-1 md:flex-initial w-full md:w-auto">
                   <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
-                  <input className="pl-10 pr-4 py-2 bg-surface-container text-body-sm border-none rounded-lg focus:ring-2 focus:ring-primary w-64 outline-none" placeholder="Search students..." type="text" />
+                  <input className="pl-10 pr-4 py-2 bg-surface-container text-body-sm border-none rounded-lg focus:ring-2 focus:ring-primary w-full md:w-64 outline-none" placeholder="Search students..." type="text" />
                 </div>
-                <button className="p-2 hover:bg-surface-container rounded-lg transition-colors border border-transparent">
+                <button className="p-2 hover:bg-surface-container rounded-lg transition-colors border border-transparent cursor-pointer">
                   <span className="material-symbols-outlined">filter_list</span>
                 </button>
               </div>
