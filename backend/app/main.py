@@ -1,10 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+
 from .database import engine, Base
 from .routers import students, admin, companies, tests
 
-# Create SQLite database tables
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(
     title="Placewise API",
@@ -12,35 +11,56 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# CORS Configuration
-# Allowed origin: http://localhost:5173
-origins = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-]
+
+@app.on_event("startup")
+def startup():
+    Base.metadata.create_all(bind=engine)
+
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Register Routers
-app.include_router(students.router)
-app.include_router(admin.router)
-app.include_router(companies.router)
-app.include_router(tests.router)
 
-@app.get("/health", tags=["health"])
+app.include_router(
+    students.router,
+    prefix="/api/v1"
+)
+
+app.include_router(
+    admin.router,
+    prefix="/api/v1"
+)
+
+app.include_router(
+    companies.router,
+    prefix="/api/v1"
+)
+
+app.include_router(
+    tests.router,
+    prefix="/api/v1"
+)
+
+
+@app.get("/health")
 def health_check():
-    return {"status": "ok"}
+    return {
+        "status":"ok"
+    }
 
-@app.get("/", tags=["root"])
+
+@app.get("/")
 def read_root():
     return {
-        "message": "Welcome to the Placewise API",
-        "docs_url": "/docs",
-        "health": "/health"
+        "message":"Welcome to Placewise API",
+        "docs":"/docs",
+        "health":"/health"
     }
