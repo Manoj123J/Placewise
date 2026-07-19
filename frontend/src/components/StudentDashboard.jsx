@@ -33,6 +33,7 @@ export default function StudentDashboard() {
   const [student, setStudent] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [skillRoadmap, setSkillRoadmap] = useState([]);
 
   const loggedInUser = JSON.parse(localStorage.getItem('user') || 'null');
   const studentId = loggedInUser?.id || 1;
@@ -44,6 +45,10 @@ export default function StudentDashboard() {
         setError(null);
         const response = await client.get(`/api/v1/students/${studentId}`);
         setStudent(response.data);
+        const roadmapResponse = await client.post(
+          `/api/v1/students/${studentId}/roadmap?target_skills=Machine Learning,DSA`
+        );
+        setSkillRoadmap(roadmapResponse.data.roadmap || []);
       } catch (err) {
         console.error("Error fetching student details:", err);
         setError("Failed to load student data. Please try again later.");
@@ -248,68 +253,79 @@ export default function StudentDashboard() {
           
           <div className="p-inset-card">
             <div className="flex flex-col gap-4">
-              {/* Step 1 (Completed) */}
-              <div className="flex items-start gap-4 p-4 rounded-lg bg-surface-container-low/50 border border-transparent hover:border-outline-variant transition-all">
-                <div className="mt-1 flex-shrink-0">
-                  <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+              {skillRoadmap && skillRoadmap.length > 0 ? (
+                skillRoadmap.map((item, index) => {
+                  const status = item?.status || (item?.step === 1 ? 'completed' : item?.step === 2 ? 'in_progress' : 'locked');
+                  const stepNum = item?.step || index + 1;
+                  const title = item?.title || 'Untitled Step';
+                  const description = item?.description;
+
+                  if (status === 'completed') {
+                    return (
+                      <div key={stepNum} className="flex items-start gap-4 p-4 rounded-lg bg-surface-container-low/50 border border-transparent hover:border-outline-variant transition-all">
+                        <div className="mt-1 flex-shrink-0">
+                          <span className="material-symbols-outlined text-primary" style={{ fontVariationSettings: "'FILL' 1" }}>check_circle</span>
+                        </div>
+                        <div className="flex-grow">
+                          <div className="flex justify-between">
+                            <h3 className="font-label-md text-label-md text-on-surface line-through decoration-on-surface-variant/40">Step {stepNum}: {title}</h3>
+                            <span className="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Completed</span>
+                          </div>
+                          {description && (
+                            <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{description}</p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  } else if (status === 'in_progress') {
+                    return (
+                      <div key={stepNum} className="flex items-start gap-4 p-4 rounded-lg bg-primary-container/5 border border-primary-container/20 ring-1 ring-primary-container/10">
+                        <div className="mt-1 flex-shrink-0">
+                          <span className="material-symbols-outlined text-primary">radio_button_checked</span>
+                        </div>
+                        <div className="flex-grow">
+                          <div className="flex justify-between">
+                            <h3 className="font-label-md text-label-md text-primary">Step {stepNum}: {title}</h3>
+                            <span className="bg-primary text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase">Current Task</span>
+                          </div>
+                          {description && (
+                            <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{description}</p>
+                          )}
+                          <div className="mt-4 w-full bg-outline-variant h-1.5 rounded-full overflow-hidden">
+                            <div className="bg-primary h-full w-[60%] transition-all duration-1000 ease-in-out"></div>
+                          </div>
+                          <div className="mt-4 flex gap-stack-sm">
+                            <button className="bg-primary text-white px-4 py-1.5 rounded text-label-sm font-label-md hover:brightness-110 active:scale-95 transition-all">Start Lab</button>
+                            <button className="text-primary hover:bg-primary/5 px-4 py-1.5 rounded text-label-sm font-label-md transition-all">View Docs</button>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div key={stepNum} className="flex items-start gap-4 p-4 rounded-lg border border-outline-variant bg-white/50 opacity-80 grayscale-[0.5]">
+                        <div className="mt-1 flex-shrink-0">
+                          <span className="material-symbols-outlined text-outline">circle</span>
+                        </div>
+                        <div className="flex-grow">
+                          <div className="flex justify-between">
+                            <h3 className="font-label-md text-label-md text-on-surface">Step {stepNum}: {title}</h3>
+                            <span className="text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-outline-variant">Locked</span>
+                          </div>
+                          {description && (
+                            <p className="font-body-sm text-body-sm text-on-surface-variant mt-1">{description}</p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  }
+                })
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
+                  <span className="material-symbols-outlined text-[36px] text-primary animate-pulse mb-3">auto_awesome</span>
+                  <p className="font-body-md text-body-md text-on-surface-variant">Generating personalized roadmap...</p>
                 </div>
-                <div className="flex-grow">
-                  <div className="flex justify-between">
-                    <h3 className="font-label-md text-label-md text-on-surface line-through decoration-on-surface-variant/40">Review Big-O Notation</h3>
-                    <span className="bg-surface-container-highest text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase">Completed</span>
-                  </div>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">Mastered space and time complexity for core algorithms.</p>
-                </div>
-              </div>
-              
-              {/* Step 2 (Active) */}
-              <div className="flex items-start gap-4 p-4 rounded-lg bg-primary-container/5 border border-primary-container/20 ring-1 ring-primary-container/10">
-                <div className="mt-1 flex-shrink-0">
-                  <span className="material-symbols-outlined text-primary">radio_button_checked</span>
-                </div>
-                <div className="flex-grow">
-                  <div className="flex justify-between">
-                    <h3 className="font-label-md text-label-md text-primary">Master Linked Lists & Trees</h3>
-                    <span className="bg-primary text-white px-2 py-0.5 rounded text-[10px] font-bold uppercase">Current Task</span>
-                  </div>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">Practice 15 Medium-difficulty LeetCode problems specifically on Doubly Linked Lists.</p>
-                  <div className="mt-4 w-full bg-outline-variant h-1.5 rounded-full overflow-hidden">
-                    <div className="bg-primary h-full w-[60%] transition-all duration-1000 ease-in-out"></div>
-                  </div>
-                  <div className="mt-4 flex gap-stack-sm">
-                    <button className="bg-primary text-white px-4 py-1.5 rounded text-label-sm font-label-md hover:brightness-110 active:scale-95 transition-all">Start Lab</button>
-                    <button className="text-primary hover:bg-primary/5 px-4 py-1.5 rounded text-label-sm font-label-md transition-all">View Docs</button>
-                  </div>
-                </div>
-              </div>
-              
-              {/* Step 3 (Upcoming) */}
-              <div className="flex items-start gap-4 p-4 rounded-lg border border-outline-variant bg-white/50 opacity-80 grayscale-[0.5]">
-                <div className="mt-1 flex-shrink-0">
-                  <span className="material-symbols-outlined text-outline">circle</span>
-                </div>
-                <div className="flex-grow">
-                  <div className="flex justify-between">
-                    <h3 className="font-label-md text-label-md text-on-surface">Mock HR Interview</h3>
-                    <span className="text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-outline-variant">Locked</span>
-                  </div>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">Simulate a high-pressure cultural fit round with AI Coach 'Aria'.</p>
-                </div>
-              </div>
-              
-              {/* Step 4 (Upcoming) */}
-              <div className="flex items-start gap-4 p-4 rounded-lg border border-outline-variant bg-white/50 opacity-80 grayscale-[0.5]">
-                <div className="mt-1 flex-shrink-0">
-                  <span className="material-symbols-outlined text-outline">circle</span>
-                </div>
-                <div className="flex-grow">
-                  <div className="flex justify-between">
-                    <h3 className="font-label-md text-label-md text-on-surface">Project Refactoring</h3>
-                    <span className="text-on-surface-variant px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-outline-variant">Locked</span>
-                  </div>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant">Implement Design Patterns (Observer, Singleton) into your Portfolio Projects.</p>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         </section>
